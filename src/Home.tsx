@@ -50,7 +50,7 @@ class Home extends React.Component<any, any> {
 
   public twitchLogin() {
     axios.get('http://0.0.0.0:8000/api/v1/auth/twitch').then(((res) => {
-      console.log(res.data)
+      // console.log(res.data)
     }))
   }
 
@@ -75,7 +75,11 @@ class Home extends React.Component<any, any> {
 
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
             <h2 style={h2Style}>To get started,<br /> login with Twitch.</h2>
-            <a href="http://0.0.0.0:8000/api/v1/auth/twitch" onClick={this.twitchLogin} style={{ ...whiteButton, marginTop: '100px' }}>
+            <a
+              href="http://0.0.0.0:8000/api/v1/auth/twitch"
+              onClick={this.twitchLogin}
+              style={{ ...whiteButton, marginTop: '100px' }}
+            >
               <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
             </a>
           </div>

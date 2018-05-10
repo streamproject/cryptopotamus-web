@@ -81,10 +81,10 @@ class Donate extends React.Component<DonateProps, DonateState> {
       web3.eth.getAccounts((err, accounts) => {
         web3.eth.sendTransaction(
           { from: accounts[0], to: this.state.ethAddress, value: Number(this.state.value) },
-          (err, res) => {
+          (err2, res) => {
             // TO DO ERROR HANDLING
-            if (err) {
-              alert('Error occured - try again later' + err)
+            if (err2) {
+              alert('Error occured - try again later' + err2)
             } else {
               alert(`transaction confirmed / pending! Check status at https://etherscan.io/address/${accounts[0]}`)
             }
