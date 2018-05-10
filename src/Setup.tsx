@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import web3 from 'web3'
+import * as Web3 from 'web3'
 import { TextError } from './components/Errors'
 import { auth } from './utils/ApiUtils'
 const character = '<'
@@ -31,7 +31,7 @@ class Setup extends React.Component<any, any> {
 
     let ethAddressError = false, channelError = false
 
-    if (!(web3 as any).utils.isAddress(this.state.ethAddress)) {
+    if (!(Web3 as any).utils.isAddress(this.state.ethAddress)) {
       ethAddressError = true
     }
 

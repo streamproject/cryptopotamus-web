@@ -1,11 +1,25 @@
 import axios from 'axios'
 import * as React from 'react'
-import Web3 from 'web3'
+import * as Web3 from 'web3'
 import { h2, input, label, nextButton, textArea, wrapper } from './components/styles/common'
 import { TopBanner } from './components/TopBanner'
 
-class Donate extends React.Component<any, any> {
-  constructor(props) {
+type DonateProps = { routerProps: any }
+type DonateState = {
+  channelId: string,
+  ethAddress: string,
+  name: string,
+  message: string,
+  value: string,
+  channelName: string,
+  logo: string,
+  verified: boolean,
+  valueETH: string,
+  valueUSD: string,
+}
+
+class Donate extends React.Component<DonateProps, DonateState> {
+  constructor(props: DonateProps) {
     super(props)
     this.state = {
       channelId: props.routerProps.match.params.channelId,
@@ -28,51 +42,53 @@ class Donate extends React.Component<any, any> {
   }
 
   public handleChange(event) {
-    console.log('changiiing')
     const name = event.target.name
     this.setState({ [name]: event.target.value })
   }
 
-  public checkIfChannelLegit() {
+  public async checkIfChannelLegit() {
     // TO DO figure out a way to do this without two calls - maybe scrapper
-    axios.get(`https://api.twitch.tv/kraken/channels/${this.state.channelId}?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`, { headers: { Accept: 'application/vnd.twitchtv.v5+' } })
-      .then((res) => {
-        this.setState({ channelName: res.data.display_name, logo: res.data.logo })
-        axios.get(`https://api.twitch.tv/api/channels/${res.data.display_name}/panels?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`)
-          .then((res) => {
-            const panels = res.data
+    try {
+      const channelInfo = await axios.get(
+        `https://api.twitch.tv/kraken/channels/${this.state.channelId}?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`,
+        { headers: { Accept: 'application/vnd.twitchtv.v5+' } })
+      this.setState({ channelName: channelInfo.data.display_name, logo: channelInfo.data.logo })
 
-            let foundPanel = false
-            panels.forEach((panel) => {
-              // to do replace w/ window.location for shorter code when not testing on locahost
-              if (panel.data.link === `https://site/donate/${this.state.channelId}/${this.state.ethAddress}`) {
-                foundPanel = true
-              }
-            })
+      const panelInfo = await axios.get(
+        `https://api.twitch.tv/api/channels/${channelInfo.data.display_name}/
+  panels?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`)
+      const panels = panelInfo.data
 
-            if (foundPanel !== false) {
-              this.setState({ verified: true })
-            }
-          }).catch((err) => {
-            // TO DO handle error message based on twitch error
-          })
-      }).catch((err) => {
+      let foundPanel = false
+      panels.forEach((panel) => {
+        // to do replace w/ window.location for shorter code when not testing on locahost
+        if (panel.data.link === `https://site/donate/${this.state.channelId}/${this.state.ethAddress}`) {
+          foundPanel = true
+        }
       })
+
+      if (foundPanel !== false) {
+        this.setState({ verified: true })
+      }
+    } catch (err) {
+      throw err
+    }
   }
 
   public handleSubmit(event) {
-    console.log(this.state)
     if ((window as any).web3) {
       const web3 = new Web3((window as any).web3)
       web3.eth.getAccounts((err, accounts) => {
-        web3.eth.sendTransaction({ from: accounts[0], to: this.state.ethAddress, value: Number(this.state.value) }, (err, res) => {
-          // TO DO ERROR HANDLING
-          if (err) {
-            alert('Error occured - try again later' + err)
-          } else {
-            alert(`transaction confirmed / pending! Check status at https://etherscan.io/address/${accounts[0]}`)
-          }
-        })
+        web3.eth.sendTransaction(
+          { from: accounts[0], to: this.state.ethAddress, value: Number(this.state.value) },
+          (err, res) => {
+            // TO DO ERROR HANDLING
+            if (err) {
+              alert('Error occured - try again later' + err)
+            } else {
+              alert(`transaction confirmed / pending! Check status at https://etherscan.io/address/${accounts[0]}`)
+            }
+          })
       })
     } else {
       alert(`Download metamask or send eth manually to ${this.state.ethAddress}`)
@@ -101,17 +117,41 @@ class Donate extends React.Component<any, any> {
           <form onSubmit={this.handleSubmit}>
             <div style={{ marginTop: '60px' }}>
               <label style={label}> Sender name: </label>
-              <input type="text" style={input} name="name" value={this.state.name} onChange={this.handleChange} placeholder="Your nickname"/>
+              <input
+                type="text"
+                style={input}
+                name="name"
+                value={this.state.name}
+                onChange={this.handleChange}
+                placeholder="Your nickname"
+              />
             </div>
             <div style={{ marginTop: '60px' }}>
               <label style={label}> Amount: </label>
-              <input type="text" style={input} name="valueUSD" value={this.state.valueUSD} onChange={this.handleChange} placeholder="0.00  USD"/>
+              <input
+                type="text"
+                style={input}
+                name="valueUSD"
+                value={this.state.valueUSD}
+                onChange={this.handleChange}
+                placeholder="0.00  USD"
+              />
               </div>
             <div style={{ marginTop: '60px' }}>
               <label style={label}> Note: </label>
-              <textarea name="message" value={this.state.message} style={textArea} rows={3} onChange={this.handleChange} placeholder="Write an optional message"/>
+              <textarea
+                name="message"
+                value={this.state.message}
+                style={textArea}
+                rows={3}
+                onChange={this.handleChange}
+                placeholder="Write an optional message"
+              />
             </div>
-            <input style={this.state.verified ? nextButton : {}} type="submit" disabled={!this.state.verified} value="Donate" />
+            <input
+              style={this.state.verified ? nextButton : {}}
+              type="submit" disabled={!this.state.verified} value="Donate"
+            />
           </form>
         </div>
       </div>
