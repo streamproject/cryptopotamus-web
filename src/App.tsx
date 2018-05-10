@@ -1,10 +1,10 @@
 // tslint:disable-next-line jsx-no-lambda
-import * as React from 'react';
-import { Route } from 'react-router-dom';
-import Activate from './Activate';
-import Donate from './Donate';
-import Home from './Home';
-import Setup from './Setup';
+import * as React from 'react'
+import { Route } from 'react-router-dom'
+import Activate from './Activate'
+import Donate from './Donate'
+import Home from './Home'
+import Setup from './Setup'
 
 const App = () => {
   return(
@@ -14,7 +14,7 @@ const App = () => {
         <Route exact path={'/activate'} render={(routerProps) => <Activate routerProps={routerProps} />} />
         <Route path={'/donate/:channelId/:ethAddress'} render={(routerProps) => <Donate routerProps={routerProps} />} />
       </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

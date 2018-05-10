@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 
 export class Input extends React.Component<any, any> {
     constructor(props) {
@@ -17,22 +17,22 @@ export class Input extends React.Component<any, any> {
             paddingRight: '16px',
             height: '',
             width: '',
-        };
-        super(props);
+        }
+        super(props)
 
-        inputStyle.height = props.height || '50px';
-        inputStyle.width = props.width || '480px';
-        this.state = { props, inputStyle, name: '' };
+        inputStyle.height = props.height || '50px'
+        inputStyle.width = props.width || '480px'
+        this.state = { props, inputStyle, name: '' }
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this)
     }
 
     public handleChange(event) {
-        const name = event.target.name;
-        this.setState({ [name]: event.target.value });
+        const name = event.target.name
+        this.setState({ [name]: event.target.value })
     }
     public render() {
-        const { value, placeholder, disabled, alt, name } = this.state.props;
+        const { value, placeholder, disabled, alt, name } = this.state.props
         return (
             <input
                 style={this.state.inputStyle}
@@ -41,6 +41,6 @@ export class Input extends React.Component<any, any> {
                 disabled={disabled}
                 alt={alt}
                 onChange={this.handleChange}/>
-        );
+        )
     }
 }

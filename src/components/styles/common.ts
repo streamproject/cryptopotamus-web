@@ -1,12 +1,12 @@
 export const wrapper = {
     marginLeft: '15%',
     marginTop: '100px',
-};
+}
 
 export const text = {
     color: '#263238',
     textAlign: 'left',
-};
+}
 
 export const h1 = {
     fontSize: '80px',
@@ -15,7 +15,7 @@ export const h1 = {
     lineHeight: '1.2',
     letterSpacing: '-1.5px',
     color: '#263238',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const h2 = {
     fontSize: '48px',
@@ -24,7 +24,7 @@ export const h2 = {
     lineHeight: '2.08',
     letterSpacing: '-1.5px',
     color: '#263238',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const label = {
     fontFamily: 'Work Sans',
@@ -34,7 +34,7 @@ export const label = {
     lineHeight: '1.56',
     letterSpacing: '-.5px',
     color: '#6572fd',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const link = {
     fontFamily: 'Work Sans',
@@ -44,7 +44,7 @@ export const link = {
     letterSpacing: '-.5px',
     color: '#6572fd',
     textDecoration: 'none',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const input = {
     fontFamily: 'Work Sans',
@@ -61,7 +61,7 @@ export const input = {
     marginTop: '25px',
     paddingLeft: '16px',
     paddingRight: '16px',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const textArea = {
     fontFamily: 'Work Sans',
@@ -77,7 +77,7 @@ export const textArea = {
     marginTop: '25px',
     paddingLeft: '16px',
     paddingRight: '16px',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const nextButton = {
     border: 'none',
@@ -97,7 +97,7 @@ export const nextButton = {
     letterSpacing: '1px',
     color: '#fff',
     cursor: 'pointer',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const box = {
     border: '1px solid #b0bec5',
@@ -112,7 +112,7 @@ export const box = {
     minHeight: '50px',
     letterSpacing: '-.8px',
     display: 'inline-block',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const buttonStyle = {
     width: '480px',
@@ -123,7 +123,7 @@ export const buttonStyle = {
     textAlign: 'center',
     border: 'none',
     cursor: 'pointer',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const textStyle = {
     fontFamily: 'Work Sans',
@@ -133,7 +133,7 @@ export const textStyle = {
     letterSpacing: '-2.5px',
     textAlign: 'left',
     color: '#263238',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const buttonTextStyle = {
     fontFamily: 'Work Sans',
@@ -143,14 +143,14 @@ export const buttonTextStyle = {
     letterSpacing: '1px',
     color: '#fff',
     textDecoration: 'none',
-} as React.CSSProperties;
+} as React.CSSProperties
 
 export const whiteButton = {
     ...buttonStyle,
     backgroundColor: '#ffffff',
-};
+}
 
 export const purpleButtonText = {
     ...buttonTextStyle,
     color: '#6572fd',
-};
+}

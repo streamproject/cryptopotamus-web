@@ -1,8 +1,8 @@
-import axios from 'axios';
-import * as React from 'react';
-import * as ReactModal from 'react-modal';
-import { } from 'react-router-dom';
-import { buttonStyle, buttonTextStyle, h1, h2, purpleButtonText, whiteButton } from './components/styles/common';
+import axios from 'axios'
+import * as React from 'react'
+import * as ReactModal from 'react-modal'
+import { } from 'react-router-dom'
+import { buttonStyle, buttonTextStyle, h1, h2, purpleButtonText, whiteButton } from './components/styles/common'
 
 const customStyles = {
   content: {
@@ -18,26 +18,26 @@ const customStyles = {
     backgroundColor: '#6572fd',
     padding: '0px',
   },
-};
+}
 
-const h2Style = h2;
-h2Style.color = '#ffffff';
-h2Style.lineHeight = '1.56';
+const h2Style = h2
+h2Style.color = '#ffffff'
+h2Style.lineHeight = '1.56'
 
 class Home extends React.Component<any, any> {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       modalIsOpen: false,
-    };
+    }
 
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this)
+    this.afterOpenModal = this.afterOpenModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   public openModal() {
-    this.setState({ modalIsOpen: true });
+    this.setState({ modalIsOpen: true })
   }
 
   public afterOpenModal() {
@@ -45,13 +45,13 @@ class Home extends React.Component<any, any> {
   }
 
   public closeModal() {
-    this.setState({ modalIsOpen: false });
+    this.setState({ modalIsOpen: false })
   }
 
   public twitchLogin() {
     axios.get('http://0.0.0.0:8000/api/v1/auth/twitch').then(((res) => {
-      console.log(res.data);
-    }));
+      console.log(res.data)
+    }))
   }
 
   public render() {
@@ -82,8 +82,8 @@ class Home extends React.Component<any, any> {
 
         </ReactModal>
       </div >
-    );
+    )
   }
 }
 
-export default Home;
+export default Home

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 
 const textError = {
     color: '#eb2b4f',
@@ -6,13 +6,13 @@ const textError = {
     fontFamily: 'Work Sans',
     lineHeight: '25px',
     marginTop: '0px',
-};
+}
 
 export class TextError extends React.Component<any, any> {
 
     constructor(props) {
-        super(props);
-        this.state = { error: props.error };
+        super(props)
+        this.state = { error: props.error }
     }
 
     public render() {
@@ -20,6 +20,6 @@ export class TextError extends React.Component<any, any> {
             <div>
                 <p style={textError}>{this.state.error}</p>
             </div>
-        );
+        )
     }
 }
