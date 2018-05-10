@@ -1,23 +1,23 @@
-import * as React from 'react';
+import * as React from 'react'
 class Form extends React.Component<any, any> {
     constructor(props) {
-        super(props);
-        this.state = { value: '' };
+        super(props)
+        this.state = { value: '' }
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(event) {
-        this.setState({ value: event.target.value });
+    public handleChange(event) {
+        this.setState({ value: event.target.value })
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+    public handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value)
+        event.preventDefault()
     }
 
-    render() {
+    public render() {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
@@ -26,8 +26,8 @@ class Form extends React.Component<any, any> {
                 </label>
                 <input type="submit" value="Submit" />
             </form>
-        );
+        )
     }
 }
 
-export default Form;
+export default Form

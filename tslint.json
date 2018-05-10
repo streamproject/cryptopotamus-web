@@ -9,7 +9,6 @@
     "object-curly-spacing": [true, "always"],
     "interface-over-type-literal": false,
     "quotemark": [true, "single", "jsx-double"],
-    "object-literal-sort-keys": [false, "ignore-case", "match-declaration-order"],
-    "no-unused-variable": true
+    "object-literal-sort-keys": [false, "ignore-case", "match-declaration-order"]
   }
 }

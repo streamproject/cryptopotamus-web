@@ -5,7 +5,7 @@ const textError = {
     fontSize: '12px',
     fontFamily: 'Work Sans',
     lineHeight: '25px',
-    marginTop: '0px'
+    marginTop: '0px',
 }
 
 export class TextError extends React.Component<any, any> {
@@ -15,7 +15,7 @@ export class TextError extends React.Component<any, any> {
         this.state = { error: props.error }
     }
 
-    render() {
+    public render() {
         return (
             <div>
                 <p style={textError}>{this.state.error}</p>

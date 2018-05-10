@@ -21,7 +21,9 @@ export class TopBanner extends React.Component<any, any> {
     public render() {
         return (
             <div style={{ width: '100%', height: '50px', backgroundColor: this.state.color, marginTop: '-16px' }}>
-                <p style={text}>{this.state.message} <a href="" style={{ marginLeft: '25px', color: '#ffffff' }}>{this.state.linkMessage}</a></p>
+                <p style={text}>{this.state.message}>
+                    <a href="" style={{ marginLeft: '25px', color: '#ffffff' }}>{this.state.linkMessage}</a>
+                </p>
             </div>
         )
     }

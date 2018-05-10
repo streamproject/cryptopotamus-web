@@ -6,18 +6,15 @@ import Donate from './Donate'
 import Home from './Home'
 import Setup from './Setup'
 
-class App extends React.Component {
-
-  public render() {
-    return (
+const App = () => {
+  return(
       <div>
         <Route exact path={'/'} render={(routerProps) => <Home routerProps={routerProps} />} />
         <Route exact path={'/setup'} render={(routerProps) => <Setup routerProps={routerProps} />} />
         <Route exact path={'/activate'} render={(routerProps) => <Activate routerProps={routerProps} />} />
         <Route path={'/donate/:channelId/:ethAddress'} render={(routerProps) => <Donate routerProps={routerProps} />} />
       </div>
-    )
-  }
+  )
 }
 
 export default App

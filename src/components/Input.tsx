@@ -1,9 +1,8 @@
 import * as React from 'react'
 
-
 export class Input extends React.Component<any, any> {
     constructor(props) {
-        let inputStyle = {
+        const inputStyle = {
             fontFamily: 'Work Sans',
             fontSize: '24px',
             fontWeight: '300',
@@ -17,27 +16,31 @@ export class Input extends React.Component<any, any> {
             paddingLeft: '16px',
             paddingRight: '16px',
             height: '',
-            width: ''
+            width: '',
         }
-        console.log(props)
         super(props)
 
         inputStyle.height = props.height || '50px'
         inputStyle.width = props.width || '480px'
-        this.state = { props, inputStyle, name:'' }
+        this.state = { props, inputStyle, name: '' }
 
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this)
     }
-    
-    handleChange(event) {
+
+    public handleChange(event) {
         const name = event.target.name
-        this.setState({ [name]: event.target.value });
+        this.setState({ [name]: event.target.value })
     }
-    render() {
+    public render() {
         const { value, placeholder, disabled, alt, name } = this.state.props
-        console.log(this.state.props.onChangeMethod)
         return (
-            <input style={this.state.inputStyle} value={value}  name={name} placeholder={placeholder} disabled={disabled} alt={alt} onChange={this.handleChange}/>
+            <input
+                style={this.state.inputStyle}
+                value={value}  name={name}
+                placeholder={placeholder}
+                disabled={disabled}
+                alt={alt}
+                onChange={this.handleChange}/>
         )
     }
 }
