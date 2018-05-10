@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 
 const text = {
     height: '25px',
@@ -9,13 +9,13 @@ const text = {
     textAlign: 'center',
     letterSpacing: '-0.5px',
     color: '#ffffff',
-} as React.CSSProperties
+} as React.CSSProperties;
 
 export class TopBanner extends React.Component<any, any> {
 
     constructor(props) {
-        super(props)
-        this.state = { color: props.color, message: props.message, linkMessage: props.linkMessage }
+        super(props);
+        this.state = { color: props.color, message: props.message, linkMessage: props.linkMessage };
     }
 
     public render() {
@@ -25,6 +25,6 @@ export class TopBanner extends React.Component<any, any> {
                     <a href="" style={{ marginLeft: '25px', color: '#ffffff' }}>{this.state.linkMessage}</a>
                 </p>
             </div>
-        )
+        );
     }
 }

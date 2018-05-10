@@ -1,1 +1,1 @@
-export const text
+export const text;
