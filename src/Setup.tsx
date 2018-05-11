@@ -1,9 +1,9 @@
 import axios from 'axios'
 import * as React from 'react'
 import { Link, Redirect } from 'react-router-dom'
-import web3 from 'web3'
+import * as Web3 from 'web3'
 import { TextError } from './components/Errors'
-import { auth } from './utils/ApiUtils'
+
 const character = '<'
 
 class Setup extends React.Component<any, any> {
@@ -19,7 +19,8 @@ class Setup extends React.Component<any, any> {
   public componentWillMount() {
     const css = document.createElement('style')
     document.body.appendChild(css)
-    css.innerHTML = '::-webkit-input-placeholder {color: #b0bec5; font-family: Work Sans; font-size:24px; line-height: 2.08; letter-spacing: -0.8px;}'
+    css.innerHTML = `::-webkit-input-placeholder
+{color: #b0bec5; font-family: Work Sans; font-size:24px; line-height: 2.08; letter-spacing: -0.8px;}`
   }
   public handleChange(event) {
     const name = event.target.name
@@ -29,9 +30,10 @@ class Setup extends React.Component<any, any> {
   public async handleSubmit(event) {
     event.preventDefault()
 
-    let ethAddressError = false, channelError = false
+    let ethAddressError = false
+    let channelError = false
 
-    if (!(web3 as any).utils.isAddress(this.state.ethAddress)) {
+    if (!(Web3 as any).utils.isAddress(this.state.ethAddress)) {
       ethAddressError = true
     }
 
@@ -50,8 +52,9 @@ class Setup extends React.Component<any, any> {
   }
 
   public loginTwitch() {
-    console.log(auth.loginTwitch())
+    // console.log(auth.loginTwitch())
   }
+
   public render() {
     if (this.state.redirect) {
       return <Redirect
@@ -69,14 +72,28 @@ class Setup extends React.Component<any, any> {
           <form onSubmit={this.handleSubmit}>
             <div>
               <label className="label"> Twitch username </label>
-              <input type="text" className="input" name="channel" value={this.state.channel} onChange={this.handleChange} placeholder="Enter your Twitch Username" />
+              <input
+                type="text"
+                className="input"
+                name="channel"
+                value={this.state.channel}
+                onChange={this.handleChange}
+                placeholder="Enter your Twitch Username"
+              />
               {this.state.channelError}
               {this.state.channelError && <TextError error="Not a valid Twitch username. Please try again." />}
             </div>
 
             <div style={{ marginTop: '50px' }}>
               <label className="label"> Ethereum address </label>
-              <input type="text" className="input" name="ethAddress" value={this.state.ethAddress} onChange={this.handleChange} placeholder="Enter your ETH address (eg. 0x...)" />
+              <input
+                type="text"
+                className="input"
+                name="ethAddress"
+                value={this.state.ethAddress}
+                onChange={this.handleChange}
+                placeholder="Enter your ETH address (eg. 0x...)"
+              />
               {this.state.ethAddressError && <TextError error="Not a valid Ethereum address. Please try again." />}
             </div>
 

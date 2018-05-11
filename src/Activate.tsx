@@ -18,7 +18,13 @@ class Activate extends React.Component<any, any> {
     if (props.routerProps.location) {
       const setupState = props.routerProps.location.state
 
-      this.state = { channel: setupState.channel, channelId: setupState.channelId, ethAddress: setupState.ethAddress, redirect: false }
+      this.state = {
+        channel: setupState.channel,
+        channelId:
+        setupState.channelId,
+        ethAddress: setupState.ethAddress,
+        redirect: false,
+      }
     } else {
       this.state = { redirect: true }
     }
@@ -54,11 +60,15 @@ class Activate extends React.Component<any, any> {
           <img src="http://cultofthepartyparrot.com/parrots/hd/birthdaypartyparrot.gif" />
         </div>
         <div style={marginTopSmall}>
-          <label style={label}> Step 4 : Copy and paste your donation page URL into the “Image Links to…” section </label>
+          <label style={label}>
+            Step 4 : Copy and paste your donation page URL into the “Image Links to…” section
+          </label>
           <Input disabled="true" value={donateLink} width="930px" alt="prop image" />
         </div>
         <div style={marginTopBig}>
-          <Link style={nextButton} to={`/donate/${this.state.channelId}/${this.state.ethAddress}`}>GO TO YOUR NEW DONATION PAGE </Link>
+          <Link style={nextButton} to={`/donate/${this.state.channelId}/${this.state.ethAddress}`}>
+            GO TO YOUR NEW DONATION PAGE
+          </Link>
         </div>
       </div>
     )
