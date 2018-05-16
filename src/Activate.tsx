@@ -8,9 +8,6 @@ const character = '<'
 const marginTopSmall = {
   marginTop: '50px',
 }
-const marginTopBig = {
-  marginTop: '150px',
-}
 
 class Activate extends React.Component<any, any> {
   constructor(props) {
@@ -19,10 +16,7 @@ class Activate extends React.Component<any, any> {
       const setupState = props.routerProps.location.state
 
       this.state = {
-        channel: setupState.channel,
-        channelId:
-        setupState.channelId,
-        ethAddress: setupState.ethAddress,
+        user: setupState.user,
         redirect: false,
       }
     } else {
@@ -35,39 +29,49 @@ class Activate extends React.Component<any, any> {
       return <Redirect to="/setup" />
     }
 
-    const twitchLink = `https://twitch.tv/${this.state.channel}`
-    const donateLink = `https://site/donate/${this.state.channelId}/${this.state.ethAddress}`
+    const twitchLink = `https://twitch.tv/${this.state.user.display_name}`
+    const donateLink = `http://cryptopotam.us/${this.state.user.id}`
 
     return (
       <div style={wrapper}>
         <Link style={link} to={'/setup'}> {character} Back </Link>
         <div>
-          <h2 style={h2}> Almost done, now activate your page</h2>
+          <h2 style={h2}>Create a new Twitch panel </h2>
         </div>
         <div>
-          <label style={label}> Step 1 : Go to your Twitch channel </label>
+          <label style={label}> Step 1 - Go to your Twitch channel(open a new tab) </label>
           <Input disabled="true" value={twitchLink} />
         </div>
         <div style={marginTopSmall}>
-          <label style={label}> Step 2 : Create a new Panel </label>
-          <br/>
+          <label style={label}> Step 2 - Create a new Panel </label>
+          <br />
+          <span style={box}> Channel </span> <span style={{ marginLeft: '16px', marginRight: '16px' }}>  >  </span>
           <span style={box}> Edit Panels </span><span style={{ marginLeft: '16px', marginRight: '16px' }}>  >  </span>
           <span style={box}> + </span> <span style={{ marginLeft: '16px', marginRight: '16px' }}>  >  </span>
           <span style={box}> Add Text or Image Panel </span>
         </div>
         <div style={marginTopSmall}>
-          <label style={label}> Step 3 : Add this image to the Panel  </label>
+          <label style={label}> Step 3 - Add this image to the Panel  </label>
           <img src="http://cultofthepartyparrot.com/parrots/hd/birthdaypartyparrot.gif" />
         </div>
         <div style={marginTopSmall}>
           <label style={label}>
-            Step 4 : Copy and paste your donation page URL into the “Image Links to…” section
+            Step 4 - Copy and paste your donation page URL into the “Image Links to…” section
           </label>
-          <Input disabled="true" value={donateLink} width="930px" alt="prop image" />
+          <Input disabled="true" value={donateLink} alt="prop image" />
         </div>
-        <div style={marginTopBig}>
-          <Link style={nextButton} to={`/donate/${this.state.channelId}/${this.state.ethAddress}`}>
-            GO TO YOUR NEW DONATION PAGE
+        <div style={marginTopSmall}>
+          <label style={label}>
+            Step 5 - Click ‘Submit’ to finish creating the Panel - then come back to this page
+          </label>
+          <br/>
+          <span style={box}> Submit </span>
+        </div>
+        <div style={marginTopSmall}>
+          <Link to={`/connect`}>
+            <button style={nextButton}>
+                NEXT
+            </button>
           </Link>
         </div>
       </div>

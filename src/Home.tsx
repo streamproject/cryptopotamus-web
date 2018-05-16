@@ -1,7 +1,6 @@
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
-import { } from 'react-router-dom'
 import { buttonStyle, buttonTextStyle, h1, h2, purpleButtonText, whiteButton } from './components/styles/common'
 
 const customStyles = {
@@ -19,10 +18,6 @@ const customStyles = {
     padding: '0px',
   },
 }
-
-const h2Style = h2
-h2Style.color = '#ffffff'
-h2Style.lineHeight = '1.56'
 
 class Home extends React.Component<any, any> {
   constructor(props) {
@@ -58,7 +53,7 @@ class Home extends React.Component<any, any> {
     return (
       <div style={{ marginTop: '200px' }}>
         <div style={{ width: '80%', textAlign: 'left', marginLeft: 'auto', marginRight: 'auto' }}>
-          <h1 style={h1}> Accept Ethereum on your Twitch stream - with alerts, without fees. </h1>
+          <h1 style={h1}> Accept Ethereum on your Twitch stream - with alerts </h1>
           <div>
             <button style={buttonStyle} onClick={this.openModal}>
               <span style={buttonTextStyle}>GET STARTED</span>
@@ -74,13 +69,15 @@ class Home extends React.Component<any, any> {
           contentLabel="Example Modal">
 
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
-            <h2 style={h2Style}>To get started,<br /> login with Twitch.</h2>
+            <h2 style={{ ...h2,  color: '#ffffff', lineHeight: '1.56' }}>To get started,<br /> login with Twitch.</h2>
             <a
               href="http://0.0.0.0:8000/api/v1/auth/twitch"
               onClick={this.twitchLogin}
-              style={{ ...whiteButton, marginTop: '100px' }}
+              style={{ textDecoration: 'none' }}
             >
+              <div style={{ ...whiteButton, marginTop: '100px' }}>
               <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
+              </div>
             </a>
           </div>
 

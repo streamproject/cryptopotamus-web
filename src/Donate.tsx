@@ -1,9 +1,14 @@
 import axios from 'axios'
 import * as React from 'react'
-import * as Web3 from 'web3'
-import { h2, input, label, nextButton, textArea, wrapper } from './components/styles/common'
+import * as ReactModal from 'react-modal'
+import { AccountSettings } from './components/AccountSettings'
+import {
+  box,
+  disabledNextButton, h2, h4, input, label, nextButton, rightPlaceholder, text, textArea, wrapper,
+} from './components/styles/common'
 import { TopBanner } from './components/TopBanner'
-
+import { users } from './utils/ApiUtils'
+/* tslint:disable */
 type DonateProps = { routerProps: any }
 type DonateState = {
   channelId: string,
@@ -16,14 +21,41 @@ type DonateState = {
   verified: boolean,
   valueETH: string,
   valueUSD: string,
+  loading: boolean,
+  selectedOption: string,
+  redirectSettings: boolean,
+  redirectLogout: boolean,
+  redirectConfirm: boolean,
+  modalIsOpen: boolean,
+}
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    height: '750px',
+    width: '640px',
+    border: 'none',
+    backgroundColor: '#6572fd',
+    padding: '0px',
+  },
 }
 
 class Donate extends React.Component<DonateProps, DonateState> {
   constructor(props: DonateProps) {
     super(props)
+
+    let justCreated = false
+    if (props.routerProps.location.state)
+      justCreated = true
+
     this.state = {
       channelId: props.routerProps.match.params.channelId,
-      ethAddress: props.routerProps.match.params.ethAddress,
+      ethAddress: '',
       name: '',
       message: '',
       value: '',
@@ -32,81 +64,125 @@ class Donate extends React.Component<DonateProps, DonateState> {
       verified: false,
       valueETH: '',
       valueUSD: '',
+      loading: true,
+      selectedOption: '',
+      redirectSettings: false,
+      redirectLogout: false,
+      redirectConfirm: false,
+      modalIsOpen: justCreated
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.onSelect = this.onSelect.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
 
-    // move this to component will mount
-    this.checkIfChannelLegit()
+  public openModal() {
+    this.setState({ modalIsOpen: true })
+  }
+
+
+  public closeModal() {
+    this.setState({ modalIsOpen: false })
+  }
+
+  public async componentWillMount() {
+    const css = document.createElement('style')
+    document.body.appendChild(css)
+    css.innerHTML = `.Select-placeholder
+{color: #6572fd; font-family: Work Sans; font-size:16px; line-height: 50px; letter-spacing: -0.8px;}`
+    try {
+      const user = await users.findUserById(this.state.channelId)
+      if (user) {
+        const twitchData = await users.meById(this.state.channelId)
+        this.setState({
+          verified: true,
+          loading: false,
+          channelName: twitchData.data.display_name,
+          logo: twitchData.data.logo,
+          ethAddress: user.data.eth_address,
+        })
+      } else {
+        this.setState({ loading: false })
+      }
+    } catch (err) {
+      //
+    }
+
+  }
+
+  public onSelect = (selectedOption) => {
+    if (selectedOption.value === 'settings') {
+      this.setState({ redirectSettings: true })
+    } else {
+      this.setState({ redirectLogout: true })
+    }
   }
 
   public handleChange(event) {
     const name = event.target.name
-    this.setState({ [name]: event.target.value })
-  }
-
-  public async checkIfChannelLegit() {
-    // TO DO figure out a way to do this without two calls - maybe scrapper
-    try {
-      const channelInfo = await axios.get(
-        `https://api.twitch.tv/kraken/channels/${this.state.channelId}?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`,
-        { headers: { Accept: 'application/vnd.twitchtv.v5+' } })
-      this.setState({ channelName: channelInfo.data.display_name, logo: channelInfo.data.logo })
-
-      const panelInfo = await axios.get(
-        `https://api.twitch.tv/api/channels/${channelInfo.data.display_name}/
-  panels?client_id=y8n21fwws8pnf1jhlhdv6hplclr7sl`)
-      const panels = panelInfo.data
-
-      let foundPanel = false
-      panels.forEach((panel) => {
-        // to do replace w/ window.location for shorter code when not testing on locahost
-        if (panel.data.link === `https://site/donate/${this.state.channelId}/${this.state.ethAddress}`) {
-          foundPanel = true
-        }
-      })
-
-      if (foundPanel !== false) {
-        this.setState({ verified: true })
+    if (name !== 'valueUSD' && name !== 'valueETH') {
+      this.setState({ [name]: event.target.value })
+    } else {
+      if (name === 'valueUSD') {
+        const val = Number(event.target.value)
+        axios.get('https://api.infura.io/v1/ticker/ethusd').then((res) => {
+          const eth = val / res.data.bid
+          this.setState({ [name]: val, valueETH: eth.toString() })
+        })
+      } else {
+        const val = Number(event.target.value)
+        axios.get('https://api.infura.io/v1/ticker/ethusd').then((res) => {
+          const usd = val * res.data.bid
+          this.setState({ [name]: val, valueUSD: usd.toString() })
+        })
       }
-    } catch (err) {
-      throw err
     }
   }
 
   public handleSubmit(event) {
-    if ((window as any).web3) {
-      const web3 = new Web3((window as any).web3)
-      web3.eth.getAccounts((err, accounts) => {
-        web3.eth.sendTransaction(
-          { from: accounts[0], to: this.state.ethAddress, value: Number(this.state.value) },
-          (err2, res) => {
-            // TO DO ERROR HANDLING
-            if (err2) {
-              alert('Error occured - try again later' + err2)
-            } else {
-              alert(`transaction confirmed / pending! Check status at https://etherscan.io/address/${accounts[0]}`)
-            }
-          })
-      })
-    } else {
-      alert(`Download metamask or send eth manually to ${this.state.ethAddress}`)
+    if (this.state.verified) {
+      this.setState({ redirectConfirm: true })
     }
-
     event.preventDefault()
   }
 
-  // figure out dat img- h2 align
   public render() {
     const message = `Donate Ethereum to ${this.state.channelName} with this URL.  ${window.location.href}`
+    const url = `https://cryptopotam.us/${this.state.channelId}`
+    if (this.state.redirectSettings) {
+      this.props.routerProps.history.push('/settings')
+    }
+    if (this.state.redirectConfirm) {
+      this.props.routerProps.history.push({ pathname: '/confirm', state: this.state })
+    }
+
     return (
-      <div>
+      <div style={{ display: this.state.loading ? 'none' : 'block' }}>
+        <ReactModal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+          contentLabel="Example Modal">
+
+          <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
+            <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}>Congruntulations.</h2>
+            <p style={{ ...h4, color: 'white' }}>
+              You now have an Ethereum donation page! This is the unique URL to your tip page where viewers can send you donations:
+            </p>
+            <div style={{...box, height: '50px', padding: 'none', width: '400px'}}>
+              <p style={{...text, color: 'white', lineHeight: '50px', padding: '0px', margin: '0px'}}>{url}</p>
+            </div>
+            <button style={{ ...nextButton, backgroundColor: 'white', color:'#6572fd', marginTop: '120px' }} onClick={this.closeModal}>GOT IT</button>
+          </div>
+        </ReactModal>
         {!this.state.verified &&
-        <TopBanner color="#eb2b4f"
-              message="This broadcaster has not yet activated their donation page."
-              linkMessage="If this is your donation page, click here to activate!" />}
+          <TopBanner color="#eb2b4f"
+            message="This broadcaster has not yet activated their donation page." />}
         {this.state.verified && <TopBanner color="#6572fd" message={message} />}
+        <AccountSettings onSelect={this.onSelect} />
         <div style={wrapper}>
           <div>
             <img src={this.state.logo} height="50px" width="50px" style={{ display: 'inline-block' }} />
@@ -116,7 +192,8 @@ class Donate extends React.Component<DonateProps, DonateState> {
           </div>
           <form onSubmit={this.handleSubmit}>
             <div style={{ marginTop: '60px' }}>
-              <label style={label}> Sender name: </label>
+              <label style={{ ...label, color: this.state.verified ? '#6572fd' : '#f3a4b7' }}> Sender name: </label>
+              <br />
               <input
                 type="text"
                 style={input}
@@ -127,18 +204,36 @@ class Donate extends React.Component<DonateProps, DonateState> {
               />
             </div>
             <div style={{ marginTop: '60px' }}>
-              <label style={label}> Amount: </label>
-              <input
-                type="text"
-                style={input}
-                name="valueUSD"
-                value={this.state.valueUSD}
-                onChange={this.handleChange}
-                placeholder="0.00  USD"
-              />
+              <label style={{ ...label, color: this.state.verified ? '#6572fd' : '#f3a4b7' }}> Amount: </label>
+              <br />
+              <div style={{ display: 'inline-block', position: 'relative' }}>
+                <input
+                  type="text"
+                  style={{ ...input, display: 'inline-block' }}
+                  name="valueUSD"
+                  value={this.state.valueUSD}
+                  onChange={this.handleChange}
+                  placeholder="0.00"
+                />
+                <span style={rightPlaceholder}> USD </span>
               </div>
+              <img src="https://i.snag.gy/LE3ATD.jpg"
+                style={{ display: 'inline-block', marginLeft: '10px', marginRight: '10px' }} />
+              <div style={{ display: 'inline-block', position: 'relative' }}>
+                <input
+                  type="text"
+                  style={input}
+                  name="valueETH"
+                  value={this.state.valueETH}
+                  onChange={this.handleChange}
+                  placeholder="0.00"
+                />
+                <span style={rightPlaceholder}> ETH </span>
+              </div>
+            </div>
             <div style={{ marginTop: '60px' }}>
-              <label style={label}> Note: </label>
+              <label style={{ ...label, color: this.state.verified ? '#6572fd' : '#f3a4b7' }}> Note: </label>
+              <br />
               <textarea
                 name="message"
                 value={this.state.message}
@@ -149,12 +244,12 @@ class Donate extends React.Component<DonateProps, DonateState> {
               />
             </div>
             <input
-              style={this.state.verified ? nextButton : {}}
-              type="submit" disabled={!this.state.verified} value="Donate"
+              style={this.state.verified ? nextButton : disabledNextButton}
+              type="submit" disabled={!this.state.verified} value="DONATE"
             />
           </form>
         </div>
-      </div>
+      </div >
     )
   }
 }
