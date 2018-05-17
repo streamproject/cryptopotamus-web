@@ -30,7 +30,7 @@ class Activate extends React.Component<any, any> {
     }
 
     const twitchLink = `https://twitch.tv/${this.state.user.display_name}`
-    const donateLink = `http://cryptopotam.us/${this.state.user.id}`
+    const donateLink = `http://cryptopotam.us/${this.state.user._id}`
 
     return (
       <div style={wrapper}>

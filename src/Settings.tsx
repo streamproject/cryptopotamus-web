@@ -85,7 +85,7 @@ class Settings extends React.Component<any, any> {
             <input
               type="text"
               style={{ ...input, width: '608px' }}
-              value={`https://cryptopotam.us/${this.state.user.id}`}
+              value={`https://cryptopotam.us/${this.state.user._id}`}
               onChange={this.handleChange}
               disabled
             />

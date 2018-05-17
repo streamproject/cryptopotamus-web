@@ -2,7 +2,7 @@ import axios from 'axios'
 // import { BASE_URL } from '../config'
 // TO DO CONFIG BASE URL
 // TO DO ADD TYPES
-/*tslint:disable*/
+
 const instance = axios.create({
   baseURL: 'http://localhost:8000/api/v1/',
   timeout: 10000,
@@ -12,7 +12,6 @@ const token = window.localStorage.getItem('token')
 
 export const users = {
   me() {
-    console.log(token)
     return instance.post('user/me', null, { headers: { authorization: token } })
   },
   meById(channelId: string) {
@@ -35,9 +34,12 @@ export const users = {
     }
   },
   findUserById(channelId) {
-    return instance.post('user/findUserById', {channelId}, { headers: { authorization: token } })
+    return instance.post('user/findUserById', { channelId }, { headers: { authorization: token } })
   },
   testAlert(name, message, value) {
     return instance.post('user/sendTestNotification', { name, message, value }, { headers: { authorization: token } })
+  },
+  sendTx(txHash, message, name, value) {
+    return instance.post('user/sendTx', { txHash, message, name, value }, { headers: { authorization: token } })
   },
 }

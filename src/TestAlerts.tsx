@@ -49,7 +49,7 @@ class TestAlerts extends React.Component<any, any> {
             </button>
           </div>
           <div style={{ marginTop: '50px' }}>
-            <Link to={`/donate/${this.state.user.id}`}>
+            <Link to={`/donate/${this.state.user._id}`}>
               <button style={nextButton}>DONE</button>
             </Link>
           </div>

@@ -122,6 +122,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
   }
 
   public handleChange(event) {
+    console.log(event.target.value)
     const name = event.target.name
     if (name !== 'valueUSD' && name !== 'valueETH') {
       this.setState({ [name]: event.target.value })
