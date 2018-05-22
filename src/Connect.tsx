@@ -2,7 +2,7 @@ import { AccountSettings } from 'components/AccountSettings'
 import { Back } from 'components/Back'
 import * as React from 'react'
 import { Redirect } from 'react-router-dom'
-import { h2, label, nextButton, wrapper } from './components/styles/common'
+import { h2, label, nextButton, text, wrapper } from './components/styles/common'
 import { users } from './utils/ApiUtils'
 
 /* tslint:disable */
@@ -16,17 +16,17 @@ export default class Connect extends React.Component<any, any> {
 
     this.handleSkipClick = this.handleSkipClick.bind(this)
   }
-  
-  public async componentWillMount(){
-    try{
-      const user = await users.findUser()
-      this.setState({user: user.data})
-    } catch{}
-  }
 
+  public async componentWillMount() {
+    try {
+      const user = await users.findUser()
+      this.setState({ user: user.data })
+    } catch{ }
+  }
+  
   public async handleSkipClick() {
     try {
-      this.setState({ redirectSkip: true})
+      this.setState({ redirectSkip: true })
     } catch (err) { }
   }
 
@@ -54,6 +54,10 @@ export default class Connect extends React.Component<any, any> {
           <div style={{ textAlign: 'center', height: '50px', width: '480px' }}>
             <p style={{ ...label, lineHeight: '50px', cursor: 'pointer' }} onClick={this.handleSkipClick}>
               Skip this step
+            </p>
+            <hr />
+            <p style={{...text, fontSize: '12px', textAlign: 'center', marginTop: '24px'}}>
+            Connecting to StreamLabs will authorize Cryptopotamus to trigger your Streamlabs OBS alerts whenever your Ethereum address receives ETH.
             </p>
           </div>
         </div>

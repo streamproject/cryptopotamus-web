@@ -6,7 +6,7 @@ import * as WebFont from 'webfontloader'
 import App from './App'
 WebFont.load({
   google: {
-    families: ['Work Sans:300,400,600,700'],
+    families: ['Work Sans:300,400,600,700', 'Material Icons'],
   },
 })
 const css = document.createElement('style')

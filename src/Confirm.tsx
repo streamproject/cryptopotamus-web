@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import { Redirect } from 'react-router'
 import { Back } from './components/Back'
-import { h2, h4, nextButton, wrapper } from './components/styles/common'
+import { h2, h4, nextButton, text, wrapper } from './components/styles/common'
 
 const customStyles = {
   content: {
@@ -18,6 +18,7 @@ const customStyles = {
     border: 'none',
     backgroundColor: '#ff1744',
     padding: '0px',
+    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
   },
 }
 
@@ -80,14 +81,26 @@ class Confirm extends React.Component<any, any> {
         </div>
         <h2 style={h2}>
           You're about to send <span style={{ color: '#6572fd' }}>{this.state.channelName}</span> {this.state.valueETH} ETH
-        <span style={{ color: '#b0bec5' }}> ( about $ {this.state.valueUSD} ) </span>
+        <span style={{ color: '#b0bec5' }}> ( about $ {Number(this.state.valueUSD).toFixed(2)} ) </span>
         </h2>
         <h4 style={h4}>
           "{this.state.message}"
         </h4>
-        <button style={nextButton} onClick={this.handleSubmit}>
-          CONFIRM AND SEND WITH METAMASK
-        </button>
+        <div style={{ width: '480px' }}>
+          <button style={nextButton} onClick={this.handleSubmit}>
+            CONFIRM AND SEND WITH METAMASK
+          </button>
+          <p style={{ ...text, textAlign: 'center', fontWeight: 600, marginTop: '25px' }}>
+            Don’t have Metamask? Download it <a href="https://metamask.io" style={{ color: '#6572fd', textDecoration: 'none' }}>here.</a>
+          </p>
+          <hr style={{ marginTop: '50px' }} />
+          <p style={{ ...text, fontSize: '12px', textAlign: 'center' }}>
+            Or, send funds directly to {this.state.channelName} ETH address: <br/>
+            <span style={{color: '#6572fd', lineHeight: '3'}}>
+            {this.state.ethAddress}
+            </span>
+          </p>
+        </div>
       </div>
     )
   }

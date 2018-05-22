@@ -1,14 +1,18 @@
 import * as React from 'react'
+import { Redirect } from 'react-router-dom'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
+import { localStorage } from '../utils/ApiUtils'
 import { users } from '../utils/ApiUtils'
-import { label, settingsMenu } from './styles/common'
+import { settingsMenu } from './styles/common'
 /* tslint:disable*/
 export class AccountSettings extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
     this.state = { error: props.error, loading: true }
+
+    this.onSelect = this.onSelect.bind(this)
   }
 
   public async componentWillMount() {
@@ -26,6 +30,8 @@ export class AccountSettings extends React.Component<any, any> {
           channelName: twitchData.data.display_name,
           logo: twitchData.data.logo,
           ethAddress: user.data.eth_address,
+          redirectSettings: false,
+          redirectLogout: false,
         })
       }
     } catch (err) {
@@ -33,27 +39,53 @@ export class AccountSettings extends React.Component<any, any> {
     }
   }
 
+  private onSelect = async(selectedOption) => {
+    if (selectedOption.value === 'settings') {
+      this.setState({ redirectSettings: true })
+    } else {
+      localStorage.setItem('token', '')
+      console.log(localStorage.getItem('token'))
+      this.setState({ redirectLogout: true })
+    }
+  }
+
+  private arrowRenderer() {
+    return (
+      <span style={{paddingTop:'10px', display: 'inline-block', float: 'left'}}>
+        <i className='large material-icons'>arrow_drop_down</i>
+      </span>
+    )
+  }
   public render() {
+    if (this.state.redirectSettings) {
+      return <Redirect to='/settings' />
+    }
+
+    if (this.state.redirectLogout) {
+      return <Redirect to='/' />
+    }
     return (
       <div style={{ ...settingsMenu, display: this.state.loading ? 'none' : 'inline-block' }}>
         <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
           <img src={this.state.logo} height="25px" width="25px" style={{ display: 'inline-block' }} />
         </div>
-        <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+        <div style={{ display: 'inline-block', verticalAlign: 'middle', paddingLeft: '15px', width: '160px' }}>
           <Select
             name="form-field-name"
             value={this.state.selectedOption}
-            onChange={this.props.onSelect}
+            onChange={this.onSelect}
             style={{
               border: 'none',
-              minWidth: '160px',
-              ...label,
-              marginLeft: '15px',
               marginTop: '-15px',
               background: 'none',
+              color: '#6572fd',
+              fontWeight: 'bold'
             }}
+            autoFocus={false}
+            className="settingsSelect"
+            autoSize={true}
+            width='auto'
             placeholder={this.state.channelName}
-            width="100px"
             menuContainerStyle={{
               width: '160px',
               border: 'none',
@@ -65,6 +97,7 @@ export class AccountSettings extends React.Component<any, any> {
               margin: 'none',
               padding: 'none',
             }}
+            arrowRenderer={this.arrowRenderer}
             menuStyle={{ width: '160px', margin: 'none', padding: 'none' }}
             searchable={false}
             options={[

@@ -61,7 +61,8 @@ export const boxStyle = {
     background: 'none',
     verticalAlign: 'top',
     cursor: 'pointer',
-}
+} as React.CSSProperties
+
 export const link = {
     fontFamily: 'Work Sans',
     fontSize: '16px',
@@ -206,4 +207,5 @@ export const rightPlaceholder = {
     fontSize: '24px',
     fontFamily: 'Work Sans',
     color: '#b0bec5',
+    top: '0px',
 } as React.CSSProperties

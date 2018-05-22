@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/bignumber.js": "^5.0.0",
+    "@types/react-tooltip": "^3.3.4",
     "axios": "^0.18.0",
     "bignumber": "^1.1.0",
     "bignumber.js": "^7.0.1",
@@ -17,6 +18,8 @@
     "react-scripts": "1.1.4",
     "react-scripts-ts": "^2.14.0",
     "react-select": "^1.2.1",
+    "react-tippy": "^1.2.2",
+    "react-tooltip": "^3.6.0",
     "web3": "^1.0.0-beta.27",
     "webfontloader": "^1.6.28"
   },
