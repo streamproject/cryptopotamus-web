@@ -108,7 +108,7 @@ class Home extends React.Component<any, any> {
             appElement={document.getElementById('root')}
             contentLabel="Get Started">
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
-              <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> Create an account </h2>
+              <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
               <a
                 href="http://0.0.0.0:8000/api/v1/auth/twitch"
                 onClick={this.twitchLogin}

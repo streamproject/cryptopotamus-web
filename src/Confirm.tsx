@@ -22,7 +22,6 @@ const customStyles = {
   },
 }
 
-/* tslint:disable */
 class Confirm extends React.Component<any, any> {
   constructor(props) {
     super(props)
@@ -36,7 +35,6 @@ class Confirm extends React.Component<any, any> {
   public openModal() {
     this.setState({ modalIsOpen: true })
   }
-
 
   public closeModal() {
     this.setState({ modalIsOpen: false })
@@ -55,7 +53,7 @@ class Confirm extends React.Component<any, any> {
     if (this.state.redirectPending) {
       return <Redirect to={{
         pathname: '/pending',
-        state: this.state
+        state: this.state,
       }} />
     }
     return (
@@ -70,9 +68,12 @@ class Confirm extends React.Component<any, any> {
             <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}>Metamask error</h2>
             <p style={{ ...h4, color: 'white' }}>
               In order to complete this transaction,
-  you must have Metamask installed and enabled. If you don’t have Metamask, you can download it here.
+              you must have Metamask installed and be logged in. If you don’t have Metamask yet, download it here.
             </p>
-            <button style={{ ...nextButton, backgroundColor: 'white', color: '#ff1744', marginTop: '120px' }} onClick={this.closeModal}>CLOSE</button>
+            <button style={{ ...nextButton, backgroundColor: 'white', color: '#ff1744', marginTop: '120px' }}
+              onClick={this.closeModal}>
+              CLOSE
+            </button>
           </div>
         </ReactModal>
         <div style={{ marginTop: '-50px', marginRight: '-300px' }}>
@@ -80,7 +81,8 @@ class Confirm extends React.Component<any, any> {
           <AccountSettings />
         </div>
         <h2 style={h2}>
-          You're about to send <span style={{ color: '#6572fd' }}>{this.state.channelName}</span> {this.state.valueETH} ETH
+          You're about to send
+          <span style={{ color: '#6572fd' }}>{this.state.channelName}</span> {this.state.valueETH} ETH
         <span style={{ color: '#b0bec5' }}> ( about $ {Number(this.state.valueUSD).toFixed(2)} ) </span>
         </h2>
         <h4 style={h4}>
@@ -91,13 +93,14 @@ class Confirm extends React.Component<any, any> {
             CONFIRM AND SEND WITH METAMASK
           </button>
           <p style={{ ...text, textAlign: 'center', fontWeight: 600, marginTop: '25px' }}>
-            Don’t have Metamask? Download it <a href="https://metamask.io" style={{ color: '#6572fd', textDecoration: 'none' }}>here.</a>
+            Don’t have Metamask? Download it
+            <a href="https://metamask.io" style={{ color: '#6572fd', textDecoration: 'none' }}>here.</a>
           </p>
           <hr style={{ marginTop: '50px' }} />
           <p style={{ ...text, fontSize: '12px', textAlign: 'center' }}>
-            Or, send funds directly to {this.state.channelName} ETH address: <br/>
-            <span style={{color: '#6572fd', lineHeight: '3'}}>
-            {this.state.ethAddress}
+            Or, send funds directly to {this.state.channelName} ETH address: <br />
+            <span style={{ color: '#6572fd', lineHeight: '3' }}>
+              {this.state.ethAddress}
             </span>
           </p>
         </div>

@@ -41,10 +41,10 @@ class Settings extends React.Component<any, any> {
     }
   }
 
-  public deleteAccount() {
+  public async deleteAccount() {
+    await users.deleteUser()
     localStorage.setItem('token', '')
     this.setState({ redirect: true })
-    users.deleteUser()
   }
 
   public onEditClick() {
@@ -77,6 +77,7 @@ class Settings extends React.Component<any, any> {
   }
 
   public render() {
+    const link = 'https://twitch.tv/' +  this.state.user.display_name
     if (this.state.redirect) {
       return <Redirect to="/" />
     }
@@ -90,15 +91,17 @@ class Settings extends React.Component<any, any> {
           <h2 style={h2}> Account settings </h2>
           <form onSubmit={this.handleSubmit}>
             <div>
-              <label style={label}> Your twitch ID </label>
+              <label style={label}> Your Twitch ID </label>
               <br />
               <div style={{ display: 'table' }}>
                 <img src={this.state.user.logo}
                   width="50px" height="50px"
                   style={{ display: 'inline-block' }} />
-                <span style={{ ...h4, display: 'table-cell', verticalAlign: 'middle', paddingLeft: '30px' }}>
+                <a style={{ ...h4, display: 'table-cell', verticalAlign: 'middle', paddingLeft: '30px', textDecoration: 'none' }}
+                  href={link}
+                  target="_blank">
                   {this.state.user.display_name}
-                </span>
+                </a>
               </div>
             </div>
 
