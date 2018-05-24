@@ -86,7 +86,13 @@ class Home extends React.Component<any, any> {
           <div style={{ paddingLeft: '10%' }}>
             <p style={{ ...text, fontWeight: 600 }}>
               The Cryptopotamus Project<br />
-              by the <span style={{ color: '#6572fd' }}> Stream Team </span>
+              by the <a href="https://streamtoken.net/"
+              style={{ textDecoration: 'none' }}
+              >
+              <span style={{ color: '#6572fd' }}>
+                Stream Team
+              </span>
+            </a>
             </p>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default class Connect extends React.Component<any, any> {
       this.setState({ user: user.data })
     } catch{ }
   }
-  
+
   public async handleSkipClick() {
     try {
       this.setState({ redirectSkip: true })
@@ -44,7 +44,7 @@ export default class Connect extends React.Component<any, any> {
           <AccountSettings />
         </div>
         <div style={wrapper}>
-          <h2 style={h2}>Connect to StreamLabs Alert Box</h2>
+          <h2 style={h2}>Connect to Streamlabs Alert Box</h2>
           <img style={{ marginTop: '50px' }} src="https://media.giphy.com/media/l3q2zVr6cu95nF6O4/giphy.gif" />
           <br />
           <a href="http://0.0.0.0:8000/api/v1/auth/streamlabs">
@@ -57,7 +57,7 @@ export default class Connect extends React.Component<any, any> {
             </p>
             <hr />
             <p style={{...text, fontSize: '12px', textAlign: 'center', marginTop: '24px'}}>
-            Connecting to StreamLabs will authorize Cryptopotamus to trigger your Streamlabs OBS alerts whenever your Ethereum address receives ETH.
+            Connecting to StreamLabs will authorize Cryptopotamus to trigger your Streamlabs OBS alerts whenever your Ethereum address receives ETH through your donation page.
             </p>
           </div>
         </div>

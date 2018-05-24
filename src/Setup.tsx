@@ -79,7 +79,7 @@ class Setup extends React.Component<any, any> {
         <br />
         <div style={{ ...wrapper, display: this.state.loading ? 'none' : 'block', clear: 'both' }} >
           <div>
-            <h2 style={h2}>Setup your Ethereum donation page</h2>
+            <h2 style={h2}>Set up your Ethereum donation page</h2>
             <form onSubmit={this.handleSubmit}>
               <div>
                 <label style={label}> Your Twitch ID </label>

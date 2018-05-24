@@ -90,7 +90,7 @@ class Settings extends React.Component<any, any> {
           <h2 style={h2}> Account settings </h2>
           <form onSubmit={this.handleSubmit}>
             <div>
-              <label style={label}> Your twitch ID </label>
+              <label style={label}> Your Twitch ID </label>
               <br />
               <div style={{ display: 'table' }}>
                 <img src={this.state.user.logo}
