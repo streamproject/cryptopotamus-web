@@ -1,2 +1,3 @@
-export const BASE_URL = process.env.NODE_ENV === 'production' ?
-  'https://api.cryptopotam.us/api/v1/' : 'localhost:800/api/v1'
+export const BASE_URL = 'https://api.cryptopotam.us/api/v1'
+
+// 'http://localhost:8000/api/v1'
