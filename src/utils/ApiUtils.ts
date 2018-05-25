@@ -72,3 +72,13 @@ export const users = {
       { headers: { authorization: token } })
   },
 }
+
+export const auth = {
+  twitch() {
+    return instance.get('auth/twitch')
+  },
+
+  twitchLogin: `${BASE_URL}/auth/twitch`,
+
+  streamlabsConnect: `${BASE_URL}/auth/streamlabs`,
+}

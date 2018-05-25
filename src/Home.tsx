@@ -1,4 +1,3 @@
-import axios from 'axios'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import {
@@ -11,8 +10,8 @@ import {
   text,
   whiteButton,
 } from './components/styles/common'
-import { users } from './utils/ApiUtils'
-/*tslint:disable*/
+import { auth, users } from './utils/ApiUtils'
+
 const customStyles = {
   content: {
     top: '50%',
@@ -26,7 +25,7 @@ const customStyles = {
     border: 'none',
     backgroundColor: '#6572fd',
     padding: '0px',
-    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)'
+    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
   },
 }
 
@@ -65,19 +64,13 @@ class Home extends React.Component<any, any> {
     this.setState({ modalIsOpen: false })
   }
 
-  public twitchLogin() {
-    axios.get('http://0.0.0.0:8000/api/v1/auth/twitch').then(((res) => {
-      // console.log(res.data)
-    }))
-  }
-
   public render() {
 
     return (
       <div style={{ display: !this.state.loading ? 'block' : 'none' }}>
         <div>
           <div style={{ textAlign: 'right', paddingRight: '80px', marginTop: '50px' }}>
-            <a href="http://0.0.0.0:8000/api/v1/auth/twitch">
+            <a href={auth.twitchLogin}>
               <button style={{ ...boxStyle, background: 'none', width: '160px' }}>
                 LOGIN
               </button>
@@ -109,11 +102,7 @@ class Home extends React.Component<any, any> {
             contentLabel="Get Started">
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
               <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
-              <a
-                href="http://0.0.0.0:8000/api/v1/auth/twitch"
-                onClick={this.twitchLogin}
-                style={{ textDecoration: 'none' }}
-              >
+              <a href={auth.twitchLogin} style={{ textDecoration: 'none' }}>
                 <div style={{ ...whiteButton, marginTop: '200px' }}>
                   <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
                 </div>
