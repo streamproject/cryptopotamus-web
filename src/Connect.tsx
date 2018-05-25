@@ -3,7 +3,7 @@ import { Back } from 'components/Back'
 import * as React from 'react'
 import { Redirect } from 'react-router-dom'
 import { h2, label, nextButton, text, wrapper } from './components/styles/common'
-import { users } from './utils/ApiUtils'
+import { auth, users } from './utils/ApiUtils'
 
 /* tslint:disable */
 export default class Connect extends React.Component<any, any> {
@@ -23,7 +23,7 @@ export default class Connect extends React.Component<any, any> {
       this.setState({ user: user.data })
     } catch{ }
   }
-  
+
   public async handleSkipClick() {
     try {
       this.setState({ redirectSkip: true })
@@ -47,7 +47,7 @@ export default class Connect extends React.Component<any, any> {
           <h2 style={h2}>Connect to StreamLabs Alert Box</h2>
           <img style={{ marginTop: '50px' }} src="https://media.giphy.com/media/l3q2zVr6cu95nF6O4/giphy.gif" />
           <br />
-          <a href="http://0.0.0.0:8000/api/v1/auth/streamlabs">
+          <a href={auth.streamlabsConnect}>
             <button style={nextButton}>CONNECT TO STREAMLABS</button>
           </a>
           <br />
