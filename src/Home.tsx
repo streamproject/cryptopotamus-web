@@ -1,3 +1,4 @@
+import { MDCRipple } from '@material/ripple'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import {
@@ -43,6 +44,10 @@ class Home extends React.Component<any, any> {
     this.closeModal = this.closeModal.bind(this)
   }
 
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
+  }
+
   public async componentWillMount() {
     const user = await users.me()
 
@@ -71,15 +76,18 @@ class Home extends React.Component<any, any> {
         <div>
           <div style={{ textAlign: 'right', paddingRight: '80px', marginTop: '50px' }}>
             <a href={auth.twitchLogin}>
-              <button style={{ ...boxStyle, background: 'none', width: '160px' }}>
+              <button className="mdc-button" style={{ ...boxStyle, background: 'none', width: '160px' }}>
                 LOGIN
               </button>
             </a>
           </div>
           <div style={{ paddingLeft: '10%' }}>
             <p style={{ ...text, fontWeight: 600 }}>
-              The Cryptopotamus Project<br />
-              by the <span style={{ color: '#6572fd' }}> Stream Team </span>
+              The Cryptopotamus Project<br /> by the
+              <a href="https://streamtoken.net/"
+                style={{ textDecoration: 'none' }}>
+                <span style={{ color: '#6572fd' }}> Stream Team </span>
+              </a>
             </p>
           </div>
         </div>
@@ -87,7 +95,7 @@ class Home extends React.Component<any, any> {
           <div style={{ width: '80%', textAlign: 'left', marginLeft: 'auto', marginRight: 'auto' }}>
             <h1 style={h1}> Accept Ethereum on your Twitch stream - with alerts </h1>
             <div>
-              <button style={buttonStyle} onClick={this.openModal}>
+              <button className="mdc-button" style={buttonStyle} onClick={this.openModal}>
                 <span style={buttonTextStyle}>GET STARTED</span>
               </button>
             </div>
@@ -103,7 +111,7 @@ class Home extends React.Component<any, any> {
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
               <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
               <a href={auth.twitchLogin} style={{ textDecoration: 'none' }}>
-                <div style={{ ...whiteButton, marginTop: '200px' }}>
+                <div style={{ ...whiteButton, marginTop: '100px' }}>
                   <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
                 </div>
               </a>

@@ -106,7 +106,6 @@ export const textArea = {
 } as React.CSSProperties
 
 export const nextButton = {
-    border: 'none',
     width: '480px',
     marginTop: '66px',
     height: '100px',

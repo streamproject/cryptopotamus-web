@@ -22,6 +22,8 @@ const customStyles = {
   },
 }
 
+import { MDCRipple } from '@material/ripple'
+
 class Confirm extends React.Component<any, any> {
   constructor(props) {
     super(props)
@@ -30,6 +32,10 @@ class Confirm extends React.Component<any, any> {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
+  }
+
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
   }
 
   public openModal() {
@@ -70,7 +76,8 @@ class Confirm extends React.Component<any, any> {
               In order to complete this transaction,
               you must have Metamask installed and be logged in. If you don’t have Metamask yet, download it here.
             </p>
-            <button style={{ ...nextButton, backgroundColor: 'white', color: '#ff1744', marginTop: '120px' }}
+            <button className="mdc-button"
+              style={{ ...nextButton, backgroundColor: 'white', color: '#ff1744', marginTop: '120px' }}
               onClick={this.closeModal}>
               CLOSE
             </button>
@@ -78,18 +85,19 @@ class Confirm extends React.Component<any, any> {
         </ReactModal>
         <div style={{ marginTop: '-50px', marginRight: '-300px' }}>
           <Back history={this.props.routerProps.history} />
-          <AccountSettings />
+          <AccountSettings routerProps={this.props.routerProps} />
         </div>
         <h2 style={h2}>
           You're about to send
           <span style={{ color: '#6572fd' }}>{this.state.channelName}</span> {this.state.valueETH} ETH
         <span style={{ color: '#b0bec5' }}> ( about $ {Number(this.state.valueUSD).toFixed(2)} ) </span>
         </h2>
-        <h4 style={h4}>
+        <h4 style={{ ...h4, display: this.state.message ? 'block' : 'none' }}>
           "{this.state.message}"
         </h4>
         <div style={{ width: '480px' }}>
-          <button style={nextButton} onClick={this.handleSubmit}>
+          <button className="mdc-button"
+            style={nextButton} onClick={this.handleSubmit}>
             CONFIRM AND SEND WITH METAMASK
           </button>
           <p style={{ ...text, textAlign: 'center', fontWeight: 600, marginTop: '25px' }}>

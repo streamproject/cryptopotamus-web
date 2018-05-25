@@ -1,3 +1,4 @@
+import { MDCRipple } from '@material/ripple'
 import { AccountSettings } from 'components/AccountSettings'
 import { Back } from 'components/Back'
 import * as React from 'react'
@@ -5,12 +6,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Redirect } from 'react-router'
 import 'react-select/dist/react-select.css'
 import * as Web3 from 'web3'
+import * as twitchPanelBlack from './assets/twitchPanelBlack.png'
+import * as twitchPanelWhite from './assets/twitchPanelWhite.png'
 import { TextError } from './components/Errors'
 import { box, boxStyle, h2, h4, input, label, text, wrapper } from './components/styles/common'
 import { localStorage } from './utils/ApiUtils'
-import { users } from './utils/ApiUtils'
-// tslint:disable:max-line-length
-
+import { auth, users } from './utils/ApiUtils'
+/*tslint:disable:max-line-length*/
 class Settings extends React.Component<any, any> {
   constructor(props) {
     super(props)
@@ -22,6 +24,7 @@ class Settings extends React.Component<any, any> {
       boxStyle,
       redirect: false,
       ethAddressError: '',
+      streamlabsToken: null,
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -31,10 +34,16 @@ class Settings extends React.Component<any, any> {
     this.onEditClick = this.onEditClick.bind(this)
   }
 
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
+  }
+
   public handleChange(event) {
     const name = event.target.name
     this.setState({ [name]: event.target.value })
-    if (event.target.value.length >= 40 && (!(Web3 as any).utils.isAddress(event.target.value) || event.target.value === '0x0000000000000000000000000000000000000000')) {
+    if (event.target.value.length >= 40
+      && (!(Web3 as any).utils.isAddress(event.target.value)
+        || event.target.value === '0x0000000000000000000000000000000000000000')) {
       this.setState({ ethAddressError: true, [name]: event.target.value })
     } else {
       this.setState({ [name]: event.target.value, ethAddressError: false })
@@ -66,7 +75,12 @@ class Settings extends React.Component<any, any> {
     const user = await users.me()
     try {
       const dbUser = await users.findUser()
-      this.setState({ user: user.data, ethAddress: dbUser.data.eth_address, loading: false })
+      this.setState({
+        user: user.data,
+        ethAddress: dbUser.data.eth_address,
+        streamlabsToken: dbUser.data.streamlabs_token,
+        loading: false,
+      })
     } catch (err) {
       //
     }
@@ -77,7 +91,7 @@ class Settings extends React.Component<any, any> {
   }
 
   public render() {
-    const link = 'https://twitch.tv/' +  this.state.user.display_name
+    const link = 'https://twitch.tv/' + this.state.user.display_name
     if (this.state.redirect) {
       return <Redirect to="/" />
     }
@@ -85,7 +99,7 @@ class Settings extends React.Component<any, any> {
       <div>
         <div style={{ marginLeft: '15%', marginTop: '50px' }}>
           <Back history={this.props.routerProps.history} />
-          <AccountSettings />
+          <AccountSettings routerProps={this.props.routerProps} />
         </div>
         <div style={{ ...wrapper, display: this.state.loading ? 'none' : 'block' }}>
           <h2 style={h2}> Account settings </h2>
@@ -97,7 +111,13 @@ class Settings extends React.Component<any, any> {
                 <img src={this.state.user.logo}
                   width="50px" height="50px"
                   style={{ display: 'inline-block' }} />
-                <a style={{ ...h4, display: 'table-cell', verticalAlign: 'middle', paddingLeft: '30px', textDecoration: 'none' }}
+                <a style={{
+                  ...h4,
+                  display: 'table-cell',
+                  verticalAlign: 'middle',
+                  paddingLeft: '30px',
+                  textDecoration: 'none',
+                }}
                   href={link}
                   target="_blank">
                   {this.state.user.display_name}
@@ -153,7 +173,10 @@ class Settings extends React.Component<any, any> {
                 </span>
               </div>
               <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                <button onClick={this.onEditClick} style={this.state.boxStyle} disabled={!(!this.state.ethAddressError || this.state.ethDisabled)}>
+                <button className="mdc-button mdc-button--outline"
+                  onClick={this.onEditClick}
+                  style={this.state.boxStyle}
+                  disabled={!(!this.state.ethAddressError || this.state.ethDisabled)}>
                   {this.state.ethDisabled ? 'EDIT' : 'SAVE '}
                 </button>
               </div>
@@ -164,9 +187,9 @@ class Settings extends React.Component<any, any> {
                 Manage Streamlabs alerts
               </label>
               <br />
-              <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                <button onClick={this.testAlert} style={boxStyle}>
-                  {'TEST ALERT'}
+              <div style={{ display: this.state.streamlabsToken ? 'inline-block' : 'none', verticalAlign: 'middle' }}>
+                <button className="mdc-button mdc-button--outlined" onClick={this.testAlert} style={boxStyle}>
+                  TEST ALERT
                 </button>
                 <a style={{
                   ...text,
@@ -179,14 +202,24 @@ class Settings extends React.Component<any, any> {
                   target="_blank"
                   href="https://streamlabs.com/dashboard#/apisettings">
                   DISCONNECT
-              </a>
+                </a>
+              </div>
+              <div style={{ display: this.state.streamlabsToken ? 'none' : 'inline-block' }}>
+                <a href={auth.streamlabsConnect} target="_blank">
+                  <button className="mdc-button" style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
+                    CONNECT TO STREAMLABS
+                  </button>
+                </a>
               </div>
             </div>
 
             <div style={{ marginTop: '50px' }}>
               <label style={label}> Get your Cryptopotamus Twitch panel  </label>
               <br />
-              <img src="http://cultofthepartyparrot.com/parrots/hd/birthdaypartyparrot.gif" />
+              <div style={{ marginTop: '30px' }}>
+                <img src={twitchPanelBlack} style={{ marginRight: '60px' }} />
+                <img src={twitchPanelWhite} />
+              </div>
             </div>
           </form>
           <div style={{ marginTop: '150px', textAlign: 'center' }}>

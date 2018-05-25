@@ -1,8 +1,9 @@
+
 import { AccountSettings } from 'components/AccountSettings'
 import { Back } from 'components/Back'
 import * as React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Tooltip } from 'react-tippy'
 import 'react-tippy/dist/tippy.css'
 import * as twitchPanelBlack from './assets/twitchPanelBlack.png'
@@ -11,8 +12,8 @@ import { box, h2, h4, label, nextButton, wrapper } from './components/styles/com
 const marginTopSmall = {
   marginTop: '50px',
 }
-
-// tslint:disable:max-line-length
+// tslint:disable
+import { MDCRipple } from '@material/ripple'
 
 const arrowStyle = {
   marginLeft: '16px',
@@ -33,6 +34,10 @@ class Activate extends React.Component<any, any> {
       this.state = { redirect: true }
     }
   }
+  
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
+  }
 
   public render() {
     if (this.state.redirect) {
@@ -46,7 +51,7 @@ class Activate extends React.Component<any, any> {
       <div style={wrapper}>
         <Back history={this.props.routerProps.history} />
         <div style={{ position: 'absolute', top: '50px', right: '0px', float: 'right' }}>
-          <AccountSettings />
+          <AccountSettings routerProps={this.props.routerProps} />
         </div>
         <div style={{ clear: 'both' }}>
           <h2 style={h2}>Create a new Twitch panel </h2>
@@ -86,8 +91,8 @@ class Activate extends React.Component<any, any> {
 
           </label>
           <div style={{ marginTop: '30px' }}>
-            <img src={twitchPanelBlack} style={{ marginRight: '60px' }}/>
-            <img src={twitchPanelWhite}/>
+            <img src={twitchPanelBlack} style={{ marginRight: '60px' }} />
+            <img src={twitchPanelWhite} />
           </div>
         </div>
         <div style={marginTopSmall}>
@@ -115,11 +120,9 @@ class Activate extends React.Component<any, any> {
           </label>
         </div>
         <div style={marginTopSmall}>
-          <Link to={`/connect`}>
-            <button style={nextButton}>
-              NEXT
+          <button className="mdc-button mdc-button--raised" style={nextButton}>
+            NEXT
             </button>
-          </Link>
         </div>
       </div>
     )

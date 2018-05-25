@@ -74,12 +74,12 @@ class Setup extends React.Component<any, any> {
           <TopBanner color="#eb2b4f"
             message="Not a valid Ethereum address! Please try again." />}
         <div style={{ display: 'block', width: '100%', position: 'absolute', top: '45px', right: '-60px' }}>
-          <AccountSettings />
+          <AccountSettings routerProps={this.props.routerProps} />
         </div>
         <br />
         <div style={{ ...wrapper, display: this.state.loading ? 'none' : 'block', clear: 'both' }} >
           <div>
-            <h2 style={h2}>Setup your Ethereum donation page</h2>
+            <h2 style={h2}>Set up your Ethereum donation page</h2>
             <form onSubmit={this.handleSubmit}>
               <div>
                 <label style={label}> Your Twitch ID </label>

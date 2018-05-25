@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material/button": "^0.35.0",
+    "@material/ripple": "^0.35.0",
+    "@react-mdc/button": "^0.1.8",
     "@types/bignumber.js": "^5.0.0",
     "@types/react-tooltip": "^3.3.4",
     "axios": "^0.18.0",
@@ -13,6 +16,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.3.2",
     "react-dropdown": "^1.4.2",
+    "react-mdc-web": "^0.17.0",
     "react-modal": "^3.4.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
