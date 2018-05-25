@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { BASE_URL } from '../config'
+import { API_URL } from '../config'
 
 const instance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_URL,
   timeout: 10000,
 })
 
@@ -78,7 +78,7 @@ export const auth = {
     return instance.get('auth/twitch')
   },
 
-  twitchLogin: `${BASE_URL}/auth/twitch`,
+  twitchLogin: `${API_URL}/auth/twitch`,
 
-  streamlabsConnect: `${BASE_URL}/auth/streamlabs`,
+  streamlabsConnect: `${API_URL}/auth/streamlabs`,
 }
