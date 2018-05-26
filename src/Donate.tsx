@@ -162,10 +162,15 @@ body{ background-color: 'white'}`
   public componentWillUnmount() {
     css.innerHTML = ''
   }
+  /*tslint:disable*/
+  public checkInvalidCharacters(value) {
+    const regex = /^[a-zA-Z0-9_]+$/
+    return !regex.test(value)
+  }
 
   public handleChange(event) {
     const name = event.target.name
-    if (name !== 'valueUSD' && name !== 'valueETH') {
+    if (name !== 'valueUSD' && name !== 'valueETH' && name !=='name') {
       this.setState({ [name]: event.target.value })
     } else {
       if (name === 'valueUSD') {
@@ -175,11 +180,16 @@ body{ background-color: 'white'}`
         if (!isNaN(val) && this.decimalPlaces(event.target.value) <= 2) {
           this.setState({ [name]: event.target.value, valueETH: eth.toString() })
         }
-      } else {
+      } else if (name === 'valueETH') {
         const val = Number(event.target.value)
         const usd = val * this.state.course
 
         this.setState({ [name]: event.target.value, valueUSD: usd.toString() })
+      } else if (name === 'name') {
+        const value = event.target.value
+        if (value.length <= 25 && !this.checkInvalidCharacters(value)) {
+          this.setState({ [name]: event.target.value })
+        }
       }
     }
   }
@@ -337,7 +347,8 @@ body{ background-color: 'white'}`
                 placeholder="Write an optional message"
               />
             </div>
-            <button className="mdc-button"
+            <button className="mdc-button mdc-button--raised"
+              type="submit"
               style={this.state.verified ? nextButton : disabledNextButton}
               disabled={!this.state.verified}>
               DONATE

@@ -3,10 +3,9 @@ import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import {
   boxStyle,
-  buttonStyle,
-  buttonTextStyle,
   h1,
   h2,
+  nextButton,
   purpleButtonText,
   text,
   whiteButton,
@@ -43,9 +42,12 @@ class Home extends React.Component<any, any> {
     this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
-
+  /*tslint:disable*/
   public componentDidMount() {
-    MDCRipple.attachTo(document.querySelector('button'))
+    const buttons = Array.from(document.querySelectorAll('button'))
+    buttons.forEach((button) => {
+      MDCRipple.attachTo(button)
+    }) 
   }
 
   public async componentWillMount() {
@@ -76,7 +78,7 @@ class Home extends React.Component<any, any> {
         <div>
           <div style={{ textAlign: 'right', paddingRight: '80px', marginTop: '50px' }}>
             <a href={auth.twitchLogin}>
-              <button className="mdc-button" style={{ ...boxStyle, background: 'none', width: '160px' }}>
+              <button className="mdc-button mdc-button--unelevated" style={{ ...boxStyle, width: '160px' }}>
                 LOGIN
               </button>
             </a>
@@ -95,8 +97,8 @@ class Home extends React.Component<any, any> {
           <div style={{ width: '80%', textAlign: 'left', marginLeft: 'auto', marginRight: 'auto' }}>
             <h1 style={h1}> Accept Ethereum on your Twitch stream - with alerts </h1>
             <div>
-              <button className="mdc-button" style={buttonStyle} onClick={this.openModal}>
-                <span style={buttonTextStyle}>GET STARTED</span>
+              <button className="mdc-button mdc-button--raised" onClick={this.openModal} style={nextButton}>
+                GET STARTED
               </button>
             </div>
           </div >
@@ -111,9 +113,9 @@ class Home extends React.Component<any, any> {
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
               <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
               <a href={auth.twitchLogin} style={{ textDecoration: 'none' }}>
-                <div style={{ ...whiteButton, marginTop: '100px' }}>
+                <button style={{...whiteButton, marginTop: '100px' }} className="mdc-button mdc-button--unelevated">
                   <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
-                </div>
+                </button>
               </a>
             </div>
 

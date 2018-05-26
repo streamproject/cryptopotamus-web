@@ -8,7 +8,6 @@ const instance = axios.create({
 
 export const localStorage = window.localStorage
 
-const token = localStorage.getItem('token')
 export const users = {
   async me() {
     try {
@@ -69,7 +68,7 @@ export const users = {
   sendTx(txHash, message, name, value, valueUSD) {
     return instance.post('user/sendTx',
       { txHash, message, name, value, valueUSD },
-      { headers: { authorization: token } })
+    )
   },
 }
 

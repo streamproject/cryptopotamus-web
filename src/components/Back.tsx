@@ -5,7 +5,6 @@ export class Back extends React.Component<any, any> {
 
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = { error: props.error }
         
         this.goBack = this.goBack.bind(this)

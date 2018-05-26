@@ -40,7 +40,7 @@ class TestAlerts extends React.Component<any, any> {
             </span>
           </div>
           <div style={{ display: 'inline-block', paddingLeft: '100px', verticalAlign: 'middle' }}>
-            <button className="mdc-button"
+            <button className="mdc-button mdc-button--outline"
               style={{
                 ...buttonStyle,
                 background: 'none',
@@ -57,7 +57,7 @@ class TestAlerts extends React.Component<any, any> {
           </div>
           <div style={{ marginTop: '50px' }}>
             <Link to={`/donate/${this.state.user._id}`}>
-              <button className="mdc-button" style={nextButton}>DONE</button>
+              <button className="mdc-button mdc-button--raised" style={nextButton}>DONE</button>
             </Link>
           </div>
         </div>

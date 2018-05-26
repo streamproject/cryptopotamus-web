@@ -12,6 +12,8 @@ import { box, h2, h4, label, nextButton, wrapper } from './components/styles/com
 const marginTopSmall = {
   marginTop: '50px',
 }
+import './assets/index.css'
+
 // tslint:disable
 import { MDCRipple } from '@material/ripple'
 
@@ -34,7 +36,7 @@ class Activate extends React.Component<any, any> {
       this.state = { redirect: true }
     }
   }
-  
+
   public componentDidMount() {
     MDCRipple.attachTo(document.querySelector('button'))
   }
@@ -120,9 +122,11 @@ class Activate extends React.Component<any, any> {
           </label>
         </div>
         <div style={marginTopSmall}>
-          <button className="mdc-button mdc-button--raised" style={nextButton}>
-            NEXT
+          <Redirect to='/connect'>
+            <button className="mdc-button mdc-button--raised" style={nextButton} >
+              NEXT
             </button>
+          </Redirect>
         </div>
       </div>
     )

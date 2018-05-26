@@ -56,7 +56,7 @@ export default class Connect extends React.Component<any, any> {
           <img style={{ marginTop: '50px' }} src="https://media.giphy.com/media/l3q2zVr6cu95nF6O4/giphy.gif" />
           <br />
           <a href={auth.streamlabsConnect}>
-            <button className="mdc-button" style={nextButton}>CONNECT TO STREAMLABS</button>
+            <button className="mdc-button mdc-button--raised" style={nextButton}>CONNECT TO STREAMLABS</button>
           </a>
           <br />
           <div style={{ textAlign: 'center', height: '50px', width: '480px' }}>

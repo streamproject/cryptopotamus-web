@@ -124,8 +124,9 @@ class Setup extends React.Component<any, any> {
                 />
                 {this.state.ethAddressError && <TextError error="Not a valid Ethereum address! Please try again." />}
               </div>
-
-              <input type="submit" value="NEXT" style={nextButton} />
+              <button className="mdc-button--raised" type="submit" style={nextButton}>
+                  NEXT
+              </button>
             </form>
           </div>
         </div>

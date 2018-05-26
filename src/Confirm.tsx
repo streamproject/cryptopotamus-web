@@ -47,10 +47,17 @@ class Confirm extends React.Component<any, any> {
   }
 
   public handleSubmit(event) {
-    if ((window as any).web3) {
-      this.setState({ redirectPending: true })
-    } else {
+    const web3 = (window as any).web3
+    if (!web3) {
       this.openModal()
+    } else {
+      web3.eth.getAccounts((err, accounts) => {
+        if (!accounts[0]) {
+          this.openModal()
+        } else {
+          this.setState({ redirectPending: true })
+        }
+      })
     }
     event.preventDefault()
   }
@@ -88,20 +95,20 @@ class Confirm extends React.Component<any, any> {
           <AccountSettings routerProps={this.props.routerProps} />
         </div>
         <h2 style={h2}>
-          You're about to send
-          <span style={{ color: '#6572fd' }}>{this.state.channelName}</span> {this.state.valueETH} ETH
+          You're about to send&nbsp;
+          <span style={{ color: '#6572fd' }}>{this.state.channelName} </span> {this.state.valueETH} ETH
         <span style={{ color: '#b0bec5' }}> ( about $ {Number(this.state.valueUSD).toFixed(2)} ) </span>
         </h2>
         <h4 style={{ ...h4, display: this.state.message ? 'block' : 'none' }}>
           "{this.state.message}"
         </h4>
         <div style={{ width: '480px' }}>
-          <button className="mdc-button"
+          <button className="mdc-button mdc-button--raised"
             style={nextButton} onClick={this.handleSubmit}>
             CONFIRM AND SEND WITH METAMASK
           </button>
           <p style={{ ...text, textAlign: 'center', fontWeight: 600, marginTop: '25px' }}>
-            Don’t have Metamask? Download it
+            Don’t have Metamask? Download it&nbsp;
             <a href="https://metamask.io" style={{ color: '#6572fd', textDecoration: 'none' }}>here.</a>
           </p>
           <hr style={{ marginTop: '50px' }} />

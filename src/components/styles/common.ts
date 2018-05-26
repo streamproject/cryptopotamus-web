@@ -51,6 +51,7 @@ export const label = {
 export const boxStyle = {
     fontFamily: 'Work Sans',
     fontSize: '16px',
+    background: 'white',
     fontWeight: 'bold',
     lineHeight: '1.56',
     letterSpacing: '1px',
@@ -58,7 +59,6 @@ export const boxStyle = {
     border: '1px solid #6572fd',
     height: '50px',
     width: '160px',
-    background: 'none',
     verticalAlign: 'top',
     cursor: 'pointer',
 } as React.CSSProperties
@@ -110,7 +110,6 @@ export const nextButton = {
     marginTop: '66px',
     height: '100px',
     textAlign: 'center',
-    backgroundColor: '#6572fd',
     textDecoration: 'none',
     fontFamily: 'Work Sans',
     fontSize: '16px',

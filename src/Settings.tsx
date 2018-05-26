@@ -35,7 +35,10 @@ class Settings extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    MDCRipple.attachTo(document.querySelector('button'))
+    const buttons = Array.from(document.querySelectorAll('button'))
+    buttons.forEach((button) => {
+      MDCRipple.attachTo(button)
+    })
   }
 
   public handleChange(event) {
@@ -62,7 +65,7 @@ class Settings extends React.Component<any, any> {
       this.setState({ ethDisabled: false, boxStyle: newBoxStyle })
     } else {
       users.updateUser({ ethAddress: this.state.ethAddress })
-      const newBoxStyle = { ...boxStyle, color: '#6572fd', backgroundColor: '#ffffff' }
+      const newBoxStyle = { ...boxStyle, backgroundColor: '#ffffff' }
       this.setState({ ethDisabled: true, boxStyle: newBoxStyle })
     }
   }
@@ -173,7 +176,7 @@ class Settings extends React.Component<any, any> {
                 </span>
               </div>
               <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-                <button className="mdc-button mdc-button--outline"
+                <button className="mdc-button mdc-button--unelevated"
                   onClick={this.onEditClick}
                   style={this.state.boxStyle}
                   disabled={!(!this.state.ethAddressError || this.state.ethDisabled)}>
@@ -206,7 +209,7 @@ class Settings extends React.Component<any, any> {
               </div>
               <div style={{ display: this.state.streamlabsToken ? 'none' : 'inline-block' }}>
                 <a href={auth.streamlabsConnect} target="_blank">
-                  <button className="mdc-button" style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
+                  <button className="mdc-button mdc-button--raised" style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
                     CONNECT TO STREAMLABS
                   </button>
                 </a>

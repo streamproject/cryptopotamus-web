@@ -35,10 +35,9 @@ class Pending extends React.Component<any, any> {
               alert('Error occured - try again later' + err2)
             } else {
               try {
-                const res = await users.sendTx(txHash, this.state.message, this.state.name, value, this.state.valueUSD)
-                alert(res)
+                await users.sendTx(txHash, this.state.message, this.state.name, value, this.state.valueUSD)
               } catch (err) {
-                alert(err)
+                //
               }
               this.setState({ slicedTxHash: txHash.slice(0, 7), txHash, modalIsOpen: true })
             }
