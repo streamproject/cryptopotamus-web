@@ -225,8 +225,9 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 </a>
               </div>
               <div style={{ display: this.state.streamlabsToken ? 'none' : 'inline-block' }}>
-                <a href={auth.streamlabsConnect} target="_blank">
+                <a href={auth.streamlabsConnect}>
                   <button className="mdc-button mdc-button--raised"
+                    type="button"
                     style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
                     CONNECT TO STREAMLABS
                   </button>
