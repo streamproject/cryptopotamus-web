@@ -10,10 +10,21 @@ import * as twitchPanelBlack from './assets/twitchPanelBlack.png'
 import * as twitchPanelWhite from './assets/twitchPanelWhite.png'
 import { TextError } from './components/Errors'
 import { box, boxStyle, h2, h4, input, label, text, wrapper } from './components/styles/common'
-import { localStorage } from './utils/ApiUtils'
 import { auth, users } from './utils/ApiUtils'
-/*tslint:disable:max-line-length*/
-class Settings extends React.Component<any, any> {
+
+type SettingsProps = { routerProps: any}
+type SettingsState = {
+  user: any,
+  loading: boolean,
+  ethAddress: string,
+  ethDisabled: boolean,
+  boxStyle: any,
+  redirect: boolean,
+  ethAddressError: boolean,
+  streamlabsToken: string,
+}
+
+class Settings extends React.Component<SettingsProps, SettingsState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,7 +34,7 @@ class Settings extends React.Component<any, any> {
       ethDisabled: true,
       boxStyle,
       redirect: false,
-      ethAddressError: '',
+      ethAddressError: false,
       streamlabsToken: null,
     }
 
@@ -55,7 +66,7 @@ class Settings extends React.Component<any, any> {
 
   public async deleteAccount() {
     await users.deleteUser()
-    localStorage.setItem('token', '')
+    window.localStorage.setItem('token', '')
     this.setState({ redirect: true })
   }
 
@@ -71,7 +82,7 @@ class Settings extends React.Component<any, any> {
   }
 
   public testAlert() {
-    users.testAlert('TestUser', 'This is where the message goes', '1')
+    users.testAlert()
   }
 
   public async componentWillMount() {
@@ -137,9 +148,11 @@ class Settings extends React.Component<any, any> {
                 <div style={{ float: 'right', position: 'absolute', top: '5px', right: '15px' }}>
                   <CopyToClipboard text={`https://cryptopotam.us/${this.state.user._id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 19 22">
-                      <g fill="none" fill-rule="evenodd">
+                      <g fill="none" fillRule="evenodd">
                         <path d="M-2-1h24v24H-2z" />
-                        <path fill="#B0BEC5" fill-rule="nonzero" d="M14 0H2C.9 0 0 .9 0 2v14h2V2h12V0zm3 4H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H6V6h11v14z" />
+                        <path fill="#B0BEC5" fillRule="nonzero"
+                        d="M14 0H2C.9 0 0 .9 0 2v14h2V2h12V0zm3 4H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1
+                        0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H6V6h11v14z" />
                       </g>
                     </svg>
                   </CopyToClipboard>
@@ -155,7 +168,11 @@ class Settings extends React.Component<any, any> {
                 Ethereum address
               </label>
               <br />
-              <div style={{ display: 'inline-block', verticalAlign: 'middle', paddingRight: '45px', position: 'relative' }}>
+              <div style={{
+                display: 'inline-block',
+                verticalAlign: 'middle',
+                paddingRight: '45px',
+                position: 'relative' }}>
                 <input
                   type="text"
                   style={{
@@ -209,7 +226,8 @@ class Settings extends React.Component<any, any> {
               </div>
               <div style={{ display: this.state.streamlabsToken ? 'none' : 'inline-block' }}>
                 <a href={auth.streamlabsConnect} target="_blank">
-                  <button className="mdc-button mdc-button--raised" style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
+                  <button className="mdc-button mdc-button--raised"
+                    style={{ ...boxStyle, width: '300px', color: 'white', backgroundColor: '#6572fd' }}>
                     CONNECT TO STREAMLABS
                   </button>
                 </a>

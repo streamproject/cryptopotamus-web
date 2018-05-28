@@ -1,4 +1,3 @@
-// tslint:disable-next-line jsx-no-lambda
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 import Activate from './Activate'

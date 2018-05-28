@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom'
 import { buttonStyle, buttonTextStyle, h2, h4, label, nextButton, wrapper } from './components/styles/common'
 import { users } from './utils/ApiUtils'
 
-class TestAlerts extends React.Component<any, any> {
+type TestAlertsProps = { routerProps: any }
+type TestAlertsState = {
+  user: any,
+  loading: boolean,
+}
+
+class TestAlerts extends React.Component<TestAlertsProps, TestAlertsState> {
   constructor(props) {
     super(props)
     this.state = { user: {}, loading: true }
@@ -20,9 +26,9 @@ class TestAlerts extends React.Component<any, any> {
   }
 
   public async testAlert() {
-    await users.testAlert('TestUser', 'Message bla bla bla', '1')
+    await users.testAlert()
   }
-  // TO DO FIX BS ASS BUTTON ALIGN
+
   public render() {
     return (
       <div style={{ ...wrapper, display: this.state.loading ? 'none' : 'block' }}>

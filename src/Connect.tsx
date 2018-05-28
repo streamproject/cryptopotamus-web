@@ -6,7 +6,13 @@ import { Redirect } from 'react-router-dom'
 import { h2, label, nextButton, text, wrapper } from './components/styles/common'
 import { auth, users } from './utils/ApiUtils'
 
-export default class Connect extends React.Component<any, any> {
+type ConnectProps = { routerProps: any }
+type ConnectState = {
+  redirectSkip: boolean,
+  user: any,
+}
+
+export default class Connect extends React.Component<ConnectProps, ConnectState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,7 +24,9 @@ export default class Connect extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    MDCRipple.attachTo(document.querySelector('button'))
+    if (document.querySelector('button')) {
+      MDCRipple.attachTo(document.querySelector('button'))
+    }
   }
 
   public async componentWillMount() {

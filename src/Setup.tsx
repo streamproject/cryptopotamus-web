@@ -1,3 +1,4 @@
+import { MDCRipple } from '@material/ripple'
 import { AccountSettings } from 'components/AccountSettings'
 import { TopBanner } from 'components/TopBanner'
 import * as React from 'react'
@@ -5,15 +6,24 @@ import { Tooltip } from 'react-tippy'
 import * as Web3 from 'web3'
 import { TextError } from './components/Errors'
 import { h2, h4, input, label, nextButton, wrapper } from './components/styles/common'
-import { localStorage, users } from './utils/ApiUtils'
+import { users } from './utils/ApiUtils'
 
-/*tslint:disable*/
-class Setup extends React.Component<any, any> {
+type SetupProps = { routerProps: any }
+type SetupState = {
+  ethAddress: string,
+  ethAddressError: boolean,
+  redirect: boolean,
+  user: any,
+  dbUser: any,
+  loading: boolean,
+}
+
+class Setup extends React.Component<SetupProps, SetupState> {
   constructor(props) {
     super(props)
     this.state = {
       ethAddress: '',
-      ethAddressError: '',
+      ethAddressError: false,
       redirect: false,
       user: {},
       dbUser: {},
@@ -23,7 +33,11 @@ class Setup extends React.Component<any, any> {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 
-    localStorage.setItem('token', this.props.routerProps.match.params.token)
+    window.localStorage.setItem('token', this.props.routerProps.match.params.token)
+  }
+
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
   }
 
   public async componentWillMount() {
@@ -40,7 +54,9 @@ class Setup extends React.Component<any, any> {
 
   public handleChange(event) {
     const name = event.target.name
-    if (event.target.value.length >= 40 && (!(Web3 as any).utils.isAddress(event.target.value) || event.target.value === '0x0000000000000000000000000000000000000000') ) {
+    if (event.target.value.length >= 40
+        && (!(Web3 as any).utils.isAddress(event.target.value)
+        || event.target.value === '0x0000000000000000000000000000000000000000')) {
       this.setState({ ethAddressError: true, [name]: event.target.value })
     } else {
       this.setState({ [name]: event.target.value, ethAddressError: false })
@@ -64,7 +80,7 @@ class Setup extends React.Component<any, any> {
       this.props.routerProps.history.push({ pathname: '/activate', state: this.state })
     }
 
-    if(this.state.dbUser.eth_address) {
+    if (this.state.dbUser.eth_address) {
       this.props.routerProps.history.push({ pathname: '/settings' })
     }
 
@@ -98,16 +114,24 @@ class Setup extends React.Component<any, any> {
                 <label style={{
                   ...label,
                   color: this.state.ethAddressError ? 'red' : '#6572fd',
-                  position: 'relative'
+                  position: 'relative',
                 }}>
                   Enter your Ethereum address
-                  <Tooltip title="This is the long number starting with 0x that uniquely identifies your Ethereum wallet. You can find it in your Ethereum wallet software (like MyEtherWallet, MetaMask, or Ledger)." position="top" trigger="mouseenter" interactive="true" style={{ position: 'absolute', top: '0px', marginLeft: '10px' }}>
+                  <Tooltip
+                  title="This is the long number starting with 0x that uniquely identifies your Ethereum wallet.
+                         You can find it in your Ethereum wallet software (like MyEtherWallet, MetaMask, or Ledger)."
+                  position="top"
+                  trigger="mouseenter"
+                  interactive="true"
+                  style={{ position: 'absolute', top: '0px', marginLeft: '10px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
                       <path fill="none" d="M0 0h24v24H0z" />
-                      <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+                      <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0
+                      18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2
+                      .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
                     </svg>
                   </Tooltip>
-              </label>
+                </label>
                 <br />
                 <input
                   type="text"
@@ -124,8 +148,8 @@ class Setup extends React.Component<any, any> {
                 />
                 {this.state.ethAddressError && <TextError error="Not a valid Ethereum address! Please try again." />}
               </div>
-              <button className="mdc-button--raised" type="submit" style={nextButton}>
-                  NEXT
+              <button className="mdc-button mdc-button--raised" type="submit" style={nextButton}>
+                NEXT
               </button>
             </form>
           </div>

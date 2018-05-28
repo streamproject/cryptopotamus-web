@@ -24,10 +24,25 @@ const customStyles = {
 
 import { MDCRipple } from '@material/ripple'
 
-class Confirm extends React.Component<any, any> {
+type ConfirmProps = { routerProps: any }
+type ConfirmState = {
+  redirectPending: boolean,
+  modalIsOpen: boolean,
+  ethAddress: string,
+  channelName: string,
+  valueUSD: string,
+  valueETH: string,
+  message: string,
+}
+
+class Confirm extends React.Component<ConfirmProps, ConfirmState> {
   constructor(props) {
     super(props)
-    this.state = { ...props.routerProps.location.state, redirectPending: false }
+    this.state = {
+      ...props.routerProps.location.state,
+      redirectPending: false,
+      modalIsOpen: false,
+    }
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.openModal = this.openModal.bind(this)

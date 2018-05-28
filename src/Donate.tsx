@@ -24,9 +24,6 @@ type DonateState = {
   valueETH: string,
   valueUSD: string,
   loading: boolean,
-  selectedOption: string,
-  redirectSettings: boolean,
-  redirectLogout: boolean,
   redirectConfirm: boolean,
   course: number,
   modalSetupIsOpen: boolean,
@@ -51,8 +48,6 @@ const customStyles = {
     boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
   },
 }
-
-let css
 
 class Donate extends React.Component<DonateProps, DonateState> {
   constructor(props: DonateProps) {
@@ -82,9 +77,6 @@ class Donate extends React.Component<DonateProps, DonateState> {
       valueETH: '',
       valueUSD: '',
       loading: channelId ? true : false,
-      selectedOption: '',
-      redirectSettings: false,
-      redirectLogout: false,
       redirectConfirm: false,
       modalSetupIsOpen: justCreated,
       modalConfirmedIsOpen: txConfirmed,
@@ -131,11 +123,6 @@ class Donate extends React.Component<DonateProps, DonateState> {
   }
 
   public async componentWillMount() {
-    css = document.createElement('style')
-    document.body.appendChild(css)
-    css.innerHTML = `.Select-placeholder
-{color: #6572fd; font-family: Work Sans; font-size:16px; line-height: 50px; letter-spacing: -0.8px;}
-body{ background-color: 'white'}`
     try {
       const user = await users.findUserById(this.state.channelId)
       if (user) {
@@ -159,10 +146,6 @@ body{ background-color: 'white'}`
 
   }
 
-  public componentWillUnmount() {
-    css.innerHTML = ''
-  }
-  /*tslint:disable*/
   public checkInvalidCharacters(value) {
     const regex = /^[a-zA-Z0-9_]+$/
     return !regex.test(value)
@@ -170,7 +153,7 @@ body{ background-color: 'white'}`
 
   public handleChange(event) {
     const name = event.target.name
-    if (name !== 'valueUSD' && name !== 'valueETH' && name !=='name') {
+    if (name !== 'valueUSD' && name !== 'valueETH' && name !== 'name') {
       this.setState({ [name]: event.target.value })
     } else {
       if (name === 'valueUSD') {
@@ -204,9 +187,7 @@ body{ background-color: 'white'}`
   public render() {
     const message = `Donate Ethereum to ${this.state.channelName} with this URL.  ${window.location.href}`
     const url = `https://cryptopotam.us/${this.state.channelId}`
-    if (this.state.redirectSettings) {
-      this.props.routerProps.history.push('/settings')
-    }
+
     if (this.state.redirectConfirm) {
       this.props.routerProps.history.push({ pathname: '/confirm', state: this.state })
     }
@@ -298,6 +279,7 @@ body{ background-color: 'white'}`
                 value={this.state.name}
                 onChange={this.handleChange}
                 placeholder="Your nickname"
+                required
               />
             </div>
             <div style={{ marginTop: '60px', textAlign: 'justify' }}>
@@ -317,6 +299,7 @@ body{ background-color: 'white'}`
                   value={this.state.valueUSD}
                   onChange={this.handleChange}
                   placeholder="0.00"
+                  required
                 />
                 <span style={rightPlaceholder}> USD </span>
               </div>

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
-import { localStorage } from '../utils/ApiUtils'
 import { users } from '../utils/ApiUtils'
 import { settingsMenu } from './styles/common'
 
@@ -17,8 +16,7 @@ export class AccountSettings extends React.Component<any, any> {
   public async componentWillMount() {
     const css = document.createElement('style')
     document.body.appendChild(css)
-    css.innerHTML = `.Select-placeholder
-{color: #6572fd; font-family: Work Sans; font-size:16px; line-height: 50px; letter-spacing: -0.8px;}`
+    css.innerHTML = ``
     try {
       const user = await users.findUser()
       if (user) {
@@ -44,7 +42,7 @@ export class AccountSettings extends React.Component<any, any> {
         this.setState({ redirectSettings: true })
         break
       case 'logout':
-        localStorage.setItem('token', '')
+        window.localStorage.setItem('token', '')
         this.setState({ redirectLogout: true })
         break
       case 'donationPage':

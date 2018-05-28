@@ -29,7 +29,14 @@ const customStyles = {
   },
 }
 
-class Home extends React.Component<any, any> {
+type HomeProps = { routerProps: any }
+type HomeState = {
+  modalIsOpen: boolean,
+  user: any,
+  loading: boolean,
+}
+
+class Home extends React.Component<HomeProps, HomeState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,15 +46,14 @@ class Home extends React.Component<any, any> {
     }
 
     this.openModal = this.openModal.bind(this)
-    this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
-  /*tslint:disable*/
+
   public componentDidMount() {
     const buttons = Array.from(document.querySelectorAll('button'))
     buttons.forEach((button) => {
       MDCRipple.attachTo(button)
-    }) 
+    })
   }
 
   public async componentWillMount() {
@@ -61,10 +67,6 @@ class Home extends React.Component<any, any> {
   }
   public openModal() {
     this.setState({ modalIsOpen: true })
-  }
-
-  public afterOpenModal() {
-    // references are now sync'd and can be accessed.
   }
 
   public closeModal() {
@@ -105,7 +107,6 @@ class Home extends React.Component<any, any> {
 
           <ReactModal
             isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeModal}
             style={customStyles}
             appElement={document.getElementById('root')}
@@ -113,7 +114,7 @@ class Home extends React.Component<any, any> {
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
               <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
               <a href={auth.twitchLogin} style={{ textDecoration: 'none' }}>
-                <button style={{...whiteButton, marginTop: '100px' }} className="mdc-button mdc-button--unelevated">
+                <button style={{ ...whiteButton, marginTop: '100px' }} className="mdc-button mdc-button--unelevated">
                   <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
                 </button>
               </a>
