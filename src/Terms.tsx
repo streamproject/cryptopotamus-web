@@ -1,20 +1,15 @@
-import { MDCRipple } from '@material/ripple'
 import * as React from 'react'
 import { boxStyle, h1, h2, text } from './components/styles/common'
 import { auth } from './utils/ApiUtils'
 
+/*tslint:disable:max-line-length*/
 type TermsProps = { routerProps: any }
-/*tslint:disable*/
+
 class Terms extends React.Component<TermsProps, {}> {
   constructor(props) {
     super(props)
     this.state = {}
 
-  }
-
-  public componentDidMount() {
-    if (document.querySelector('button'))
-      MDCRipple.attachTo(document.querySelector('button'))
   }
 
   public render() {
@@ -38,7 +33,7 @@ class Terms extends React.Component<TermsProps, {}> {
             </p>
           </div>
         </div>
-        <div style={{marginLeft: '10%', marginRight: '10%', marginTop: '100px'}}>
+        <div style={{ marginLeft: '10%', marginRight: '10%', marginTop: '100px' }}>
           <h1 style={h1}>Terms & Conditions</h1>
           <p style={text}>
             These Terms of Use govern your access to and use of our website (the “Website”), and any other online services (collectively, the “Services”) provided by Cryptopotam.us or its legal affiliates (“Cryptopotam.us”, the “Company”, “we” or “us”), including any content, functionality, features and applications offered on or through the Services to you as a guest or registered user.
