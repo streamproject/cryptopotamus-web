@@ -139,7 +139,7 @@ const questionAnswerContent = [
     answer: (
       <span>
         Cryptopotamus was created by the team from the <a
-          href="www.streamtoken.net" target="_blank">Stream</a> project, which
+          href="https://www.streamtoken.net" target="_blank">Stream</a> project, which
         shut down in May 2018. However, it’s open source so you can help improve it
         on <a href="https://github.com/streamproject" target="_blank">Github</a> if you want to!
       </span>
@@ -230,7 +230,7 @@ class Home extends React.Component<HomeProps, HomeState> {
             <h2 style={h2}>How does it work?</h2>
             <p style={{ marginTop: '100px', ...text, fontSize: '24px', lineHeight: '50px', letterSpacing: '-0.8px' }}>
               We help you set up a crypto-donation page in 3 easy steps.
-              When someone wants to send you crypto, they can go to your
+              When someone wants to send you Ethereum, they can go to your
               unique donation page to pay you directly using <a
                 href="https://metamask.io/" target="_blank">Metamask</a>, a
               browser plugin that connects to the Ethereum blockchain. If
