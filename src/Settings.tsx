@@ -144,7 +144,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 Your donation page URL
             </label>
               <div style={{ ...box, width: '480px', marginTop: '30px', position: 'relative' }}>
-                <span> {`https://cryptopotam.us/${this.state.user._id}`} </span>
+                <span> {`https://cryptopotam.us/donate/${this.state.user._id}`} </span>
                 <div style={{ float: 'right', position: 'absolute', top: '5px', right: '15px' }}>
                   <CopyToClipboard text={`https://cryptopotam.us/${this.state.user._id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 19 22">
