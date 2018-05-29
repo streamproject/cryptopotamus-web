@@ -1,3 +1,4 @@
+import Privacy from 'Privacy'
 import * as React from 'react'
 import { Route } from 'react-router-dom'
 import Activate from './Activate'
@@ -8,6 +9,7 @@ import Home from './Home'
 import Pending from './Pending'
 import Settings from './Settings'
 import Setup from './Setup'
+import Terms from './Terms'
 import TestAlerts from './TestAlerts'
 
 const App = () => {
@@ -22,6 +24,8 @@ const App = () => {
         <Route exact path={'/settings'} render={(routerProps) => <Settings routerProps={routerProps} />} />
         <Route exact path={'/confirm'} render={(routerProps) => <Confirm routerProps={routerProps} />} />
         <Route exact path={'/pending'} render={(routerProps) => <Pending routerProps={routerProps} />} />
+        <Route exact path={'/terms'} render={(routerProps) => <Terms routerProps={routerProps} />} />
+        <Route exact path={'/privacy'} render={(routerProps) => <Privacy routerProps={routerProps} />} />
       </div>
   )
 }

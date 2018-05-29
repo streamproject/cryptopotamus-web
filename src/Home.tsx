@@ -1,6 +1,7 @@
 import { MDCRipple } from '@material/ripple'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
+import { Link } from 'react-router-dom'
 import {
   BigColumn,
   boxStyle,
@@ -37,47 +38,47 @@ const HowStep = (props: {
   description: string,
   details: string,
 }) => (
-  <div style={{
-    marginBottom: '100px',
-    display: 'flex',
-  }}>
     <div style={{
-      width: '100px',
-      height: '100px',
-      backgroundColor: '#f6f9fb',
+      marginBottom: '100px',
       display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: '60px',
     }}>
       <div style={{
-        fontSize: '48px',
-        fontWeight: 600,
-        color: '#b0bec5',
+        width: '100px',
+        height: '100px',
+        backgroundColor: '#f6f9fb',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: '60px',
       }}>
-        {props.number}
+        <div style={{
+          fontSize: '48px',
+          fontWeight: 600,
+          color: '#b0bec5',
+        }}>
+          {props.number}
+        </div>
+      </div>
+      <div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 500,
+          lineHeight: 2.08,
+          letterSpacing: '-0.8px',
+          color: '#6572fd',
+        }}>
+          {props.description}
+        </div>
+        <div style={{
+          fontSize: '16px',
+          lineHeight: 1.56,
+          letterSpacing: '-0.5px',
+        }}>
+          {props.details}
+        </div>
       </div>
     </div>
-    <div>
-      <div style={{
-        fontSize: '24px',
-        fontWeight: 500,
-        lineHeight: 2.08,
-        letterSpacing: '-0.8px',
-        color: '#6572fd',
-      }}>
-        {props.description}
-      </div>
-      <div style={{
-        fontSize: '16px',
-        lineHeight: 1.56,
-        letterSpacing: '-0.5px',
-      }}>
-        {props.details}
-      </div>
-    </div>
-  </div>
-)
+  )
 
 const QuestionAnswer = (props: { question: string, answer: React.ReactNode }) => (
   <div style={{ marginTop: '150px' }}>
@@ -102,7 +103,7 @@ const questionAnswerContent = [
     answer: (
       <span>
         We'll let <a href="https://www.youtube.com/watch?v=IJWGuGRbxec"
-        target="_blank">these guys</a> explain it.
+          target="_blank">these guys</a> explain it.
       </span>
     ),
   },
@@ -111,10 +112,10 @@ const questionAnswerContent = [
     answer: (
       <span>
         No. Unlike other Twitch integrations, we use <a
-        href="https://metamask.io/" target="_blank">Metamask</a> to accept
+          href="https://metamask.io/" target="_blank">Metamask</a> to accept
         payments, meaning the only costs involved are the <a
-        href="https://ethereum.stackexchange.com/questions/3/what-is-meant-by-the-term-gas"
-        target="_blank">miniscule gas costs</a> supporters pay as
+          href="https://ethereum.stackexchange.com/questions/3/what-is-meant-by-the-term-gas"
+          target="_blank">miniscule gas costs</a> supporters pay as
         part of accessing the Ethereum blockchain. This avoids
         the 2-4% transactions fees involved in using centralized
         services like Paypal and Coinbase.
@@ -138,7 +139,7 @@ const questionAnswerContent = [
     answer: (
       <span>
         Cryptopotamus was created by the team from the <a
-        href="www.streamtoken.net" target="_blank">Stream</a> project, which
+          href="www.streamtoken.net" target="_blank">Stream</a> project, which
         shut down in May 2018. However, it’s open source so you can help improve it
         on <a href="https://github.com/streamproject" target="_blank">Github</a> if you want to!
       </span>
@@ -231,7 +232,7 @@ class Home extends React.Component<HomeProps, HomeState> {
               We help you set up a crypto-donation page in 3 easy steps.
               When someone wants to send you crypto, they can go to your
               unique donation page to pay you directly using <a
-              href="https://metamask.io/" target="_blank">Metamask</a>, a
+                href="https://metamask.io/" target="_blank">Metamask</a>, a
               browser plugin that connects to the Ethereum blockchain. If
               you set up StreamLabs alerts, you’ll also get real-time
               in-stream alerts so you can thank your supporters for their
@@ -273,16 +274,20 @@ class Home extends React.Component<HomeProps, HomeState> {
             <h2 style={h1}>Frequently <br /> Asked <br /> Questions</h2>
             <div style={SmallColumn}>
               {questionAnswerContent.map(({ question, answer }, i) => (
-                <QuestionAnswer question={question} answer={answer} key={i}/>
+                <QuestionAnswer question={question} answer={answer} key={i} />
               ))}
             </div>
           </div>
         </div>
 
         <div style={{ backgroundColor: '#6572fd', width: '100%' }}>
-          <div style={{ ...BigColumn, paddingTop: '100px', paddingBottom: '100px' }}>
+          <div style={{ ...BigColumn, paddingTop: '100px', paddingBottom: '100px', position: 'relative' }}>
             <p style={{ ...label, color: 'white', marginBottom: '50px' }}>
               The Cryptopotamus Project <br /> by the Stream Team
+            </p>
+            <p style={{ textAlign: 'right', position: 'absolute', top: '100px', right: '10%' }}>
+              <Link to="/privacy" style={{ color: 'white', textDecoration: 'none' }}> Privacy Policy <br /> </Link>
+              <Link to ="/terms" style={{ color: 'white', textDecoration: 'none' }}> Terms & Conditions </Link>
             </p>
             <button
               className="mdc-button mdc-button--raised" onClick={this.openModal}

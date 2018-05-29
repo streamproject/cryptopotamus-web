@@ -18,6 +18,7 @@ type PendingState = {
   ethAddress: string,
   message: string,
   name: string,
+  channelId: string,
 }
 
 class Pending extends React.Component<PendingProps, PendingState> {
@@ -74,7 +75,10 @@ class Pending extends React.Component<PendingProps, PendingState> {
   public render() {
     if (this.state.modalIsOpen) {
       return <Redirect
-        to={{ pathname: '/donate', state: { txHash: this.state.txHash, slicedTxHash: this.state.slicedTxHash } }} />
+        to={{
+          pathname: `/donate/${this.state.channelId}`,
+          state: { txHash: this.state.txHash, slicedTxHash: this.state.slicedTxHash },
+        }} />
     }
     return (
       <div>
