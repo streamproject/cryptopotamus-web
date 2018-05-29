@@ -207,3 +207,14 @@ export const rightPlaceholder = {
     color: '#b0bec5',
     top: '0px',
 } as React.CSSProperties
+
+export const BigColumn = {
+  width: '80%',
+  textAlign: 'left',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+} as React.CSSProperties
+
+export const SmallColumn = {
+  padding: '0 20%',
+} as React.CSSProperties
