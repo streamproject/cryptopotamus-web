@@ -1,11 +1,11 @@
+import { MDCRipple } from '@material/ripple'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import {
   boxStyle,
-  buttonStyle,
-  buttonTextStyle,
   h1,
   h2,
+  nextButton,
   purpleButtonText,
   text,
   whiteButton,
@@ -29,7 +29,14 @@ const customStyles = {
   },
 }
 
-class Home extends React.Component<any, any> {
+type HomeProps = { routerProps: any }
+type HomeState = {
+  modalIsOpen: boolean,
+  user: any,
+  loading: boolean,
+}
+
+class Home extends React.Component<HomeProps, HomeState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,8 +46,14 @@ class Home extends React.Component<any, any> {
     }
 
     this.openModal = this.openModal.bind(this)
-    this.afterOpenModal = this.afterOpenModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
+  }
+
+  public componentDidMount() {
+    const buttons = Array.from(document.querySelectorAll('button'))
+    buttons.forEach((button) => {
+      MDCRipple.attachTo(button)
+    })
   }
 
   public async componentWillMount() {
@@ -56,10 +69,6 @@ class Home extends React.Component<any, any> {
     this.setState({ modalIsOpen: true })
   }
 
-  public afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
   public closeModal() {
     this.setState({ modalIsOpen: false })
   }
@@ -71,15 +80,18 @@ class Home extends React.Component<any, any> {
         <div>
           <div style={{ textAlign: 'right', paddingRight: '80px', marginTop: '50px' }}>
             <a href={auth.twitchLogin}>
-              <button style={{ ...boxStyle, background: 'none', width: '160px' }}>
+              <button className="mdc-button mdc-button--unelevated" style={{ ...boxStyle, width: '160px' }}>
                 LOGIN
               </button>
             </a>
           </div>
           <div style={{ paddingLeft: '10%' }}>
             <p style={{ ...text, fontWeight: 600 }}>
-              The Cryptopotamus Project<br />
-              by the <span style={{ color: '#6572fd' }}> Stream Team </span>
+              The Cryptopotamus Project<br /> by the
+              <a href="https://streamtoken.net/"
+                style={{ textDecoration: 'none' }}>
+                <span style={{ color: '#6572fd' }}> Stream Team </span>
+              </a>
             </p>
           </div>
         </div>
@@ -87,15 +99,14 @@ class Home extends React.Component<any, any> {
           <div style={{ width: '80%', textAlign: 'left', marginLeft: 'auto', marginRight: 'auto' }}>
             <h1 style={h1}> Accept Ethereum on your Twitch stream - with alerts </h1>
             <div>
-              <button style={buttonStyle} onClick={this.openModal}>
-                <span style={buttonTextStyle}>GET STARTED</span>
+              <button className="mdc-button mdc-button--raised" onClick={this.openModal} style={nextButton}>
+                GET STARTED
               </button>
             </div>
           </div >
 
           <ReactModal
             isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeModal}
             style={customStyles}
             appElement={document.getElementById('root')}
@@ -103,9 +114,9 @@ class Home extends React.Component<any, any> {
             <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
               <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}> To get started, login with Twitch </h2>
               <a href={auth.twitchLogin} style={{ textDecoration: 'none' }}>
-                <div style={{ ...whiteButton, marginTop: '200px' }}>
+                <button style={{ ...whiteButton, marginTop: '100px' }} className="mdc-button mdc-button--unelevated">
                   <span style={purpleButtonText}>LOGIN WITH TWITCH</span>
-                </div>
+                </button>
               </a>
             </div>
 

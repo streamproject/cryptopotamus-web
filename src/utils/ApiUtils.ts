@@ -6,9 +6,8 @@ const instance = axios.create({
   timeout: 10000,
 })
 
-export const localStorage = window.localStorage
+const localStorage = window.localStorage
 
-const token = localStorage.getItem('token')
 export const users = {
   async me() {
     try {
@@ -59,17 +58,17 @@ export const users = {
     )
   },
 
-  testAlert(name, message, value) {
+  testAlert() {
     return instance.post(
       'user/sendTestNotification',
-      { name, message, value }, { headers: { authorization: localStorage.getItem('token') } },
+      {}, { headers: { authorization: localStorage.getItem('token') } },
     )
   },
 
   sendTx(txHash, message, name, value, valueUSD) {
     return instance.post('user/sendTx',
       { txHash, message, name, value, valueUSD },
-      { headers: { authorization: token } })
+    )
   },
 }
 

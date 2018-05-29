@@ -1,3 +1,4 @@
+import { MDCRipple } from '@material/ripple'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
@@ -9,7 +10,7 @@ import {
 } from './components/styles/common'
 import { TopBanner } from './components/TopBanner'
 import { users } from './utils/ApiUtils'
-/* tslint:disable */
+
 type DonateProps = { routerProps: any }
 type DonateState = {
   channelId: string,
@@ -23,15 +24,12 @@ type DonateState = {
   valueETH: string,
   valueUSD: string,
   loading: boolean,
-  selectedOption: string,
-  redirectSettings: boolean,
-  redirectLogout: boolean,
   redirectConfirm: boolean,
   course: number,
   modalSetupIsOpen: boolean,
   modalConfirmedIsOpen: boolean,
   txHash: string,
-  slicedTxHash: string
+  slicedTxHash: string,
 }
 
 const customStyles = {
@@ -47,22 +45,23 @@ const customStyles = {
     border: 'none',
     backgroundColor: '#6572fd',
     padding: '0px',
-    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)'
+    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
   },
 }
-
-let css
 
 class Donate extends React.Component<DonateProps, DonateState> {
   constructor(props: DonateProps) {
     super(props)
 
-    let justCreated = false, txConfirmed = false
+    let justCreated = false
+    let txConfirmed = false
     if (this.props.routerProps.location.state) {
-      if (props.routerProps.location.state.justCreated)
+      if (props.routerProps.location.state.justCreated) {
         justCreated = true
-      if (props.routerProps.location.state.txHash)
+      }
+      if (props.routerProps.location.state.txHash) {
         txConfirmed = true
+      }
     }
     const { channelId } = props.routerProps.match.params
 
@@ -78,15 +77,12 @@ class Donate extends React.Component<DonateProps, DonateState> {
       valueETH: '',
       valueUSD: '',
       loading: channelId ? true : false,
-      selectedOption: '',
-      redirectSettings: false,
-      redirectLogout: false,
       redirectConfirm: false,
       modalSetupIsOpen: justCreated,
       modalConfirmedIsOpen: txConfirmed,
       course: null,
-      txHash: txConfirmed? props.routerProps.location.state.txHash: '',
-      slicedTxHash: txConfirmed? props.routerProps.location.state.slicedTxHash: ''
+      txHash: txConfirmed ? props.routerProps.location.state.txHash : '',
+      slicedTxHash: txConfirmed ? props.routerProps.location.state.slicedTxHash : '',
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -95,38 +91,38 @@ class Donate extends React.Component<DonateProps, DonateState> {
     this.closeModal = this.closeModal.bind(this)
   }
 
-  public openModal(name) {
-    if (name == 'setup')
-      this.setState({ modalSetupIsOpen: true })
-    else
-      this.setState({ modalConfirmedIsOpen: true })
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
   }
 
+  public openModal(name) {
+    if (name === 'setup') {
+      this.setState({ modalSetupIsOpen: true })
+    } else {
+      this.setState({ modalConfirmedIsOpen: true })
+    }
+  }
 
   public closeModal(name) {
-    if (name == 'setup')
+    if (name === 'setup') {
       this.setState({ modalSetupIsOpen: false })
-    else
+    } else {
       this.setState({ modalConfirmedIsOpen: false })
+    }
   }
 
-  private decimalPlaces(num) {
-    var match = num.match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
-    if (!match) { return 0; }
+  public decimalPlaces(num) {
+    const match = num.match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/)
+    if (!match) { return 0 }
     return Math.max(
       0,
       // Number of digits right of decimal point.
       (match[1] ? match[1].length : 0)
       // Adjust for scientific notation.
-      - (match[2] ? +match[2] : 0));
+      - (match[2] ? +match[2] : 0))
   }
 
   public async componentWillMount() {
-    css = document.createElement('style')
-    document.body.appendChild(css)
-    css.innerHTML = `.Select-placeholder
-{color: #6572fd; font-family: Work Sans; font-size:16px; line-height: 50px; letter-spacing: -0.8px;}
-body{ background-color: 'white'}`
     try {
       const user = await users.findUserById(this.state.channelId)
       if (user) {
@@ -150,27 +146,33 @@ body{ background-color: 'white'}`
 
   }
 
-  public componentWillUnmount() {
-    css.innerHTML = ''
+  public checkInvalidCharacters(value) {
+    const regex = /^[a-zA-Z0-9_]+$/
+    return !regex.test(value)
   }
 
   public handleChange(event) {
-    console.log(event.target.value)
     const name = event.target.name
-    if (name !== 'valueUSD' && name !== 'valueETH') {
+    if (name !== 'valueUSD' && name !== 'valueETH' && name !== 'name') {
       this.setState({ [name]: event.target.value })
     } else {
       if (name === 'valueUSD') {
         const val = Number(event.target.value)
         const eth = val / this.state.course
 
-        if (!isNaN(val) && this.decimalPlaces(event.target.value) <= 2)
+        if (!isNaN(val) && this.decimalPlaces(event.target.value) <= 2) {
           this.setState({ [name]: event.target.value, valueETH: eth.toString() })
-      } else {
+        }
+      } else if (name === 'valueETH') {
         const val = Number(event.target.value)
         const usd = val * this.state.course
 
         this.setState({ [name]: event.target.value, valueUSD: usd.toString() })
+      } else if (name === 'name') {
+        const value = event.target.value
+        if (value.length <= 25 && !this.checkInvalidCharacters(value)) {
+          this.setState({ [name]: event.target.value })
+        }
       }
     }
   }
@@ -185,9 +187,7 @@ body{ background-color: 'white'}`
   public render() {
     const message = `Donate Ethereum to ${this.state.channelName} with this URL.  ${window.location.href}`
     const url = `https://cryptopotam.us/${this.state.channelId}`
-    if (this.state.redirectSettings) {
-      this.props.routerProps.history.push('/settings')
-    }
+
     if (this.state.redirectConfirm) {
       this.props.routerProps.history.push({ pathname: '/confirm', state: this.state })
     }
@@ -203,12 +203,17 @@ body{ background-color: 'white'}`
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
             <h2 style={{ ...h2, color: '#ffffff', lineHeight: '1.56' }}>Congruntulations.</h2>
             <p style={{ ...h4, color: 'white' }}>
-              You now have an Ethereum donation page! This is the unique URL to your tip page where viewers can send you donations:
+              You now have an Ethereum donation page!
+              This is the unique URL to your tip page where viewers can send you donations:
             </p>
             <div style={{ ...box, height: '50px', padding: 'none', width: '400px' }}>
               <p style={{ ...text, color: 'white', lineHeight: '50px', padding: '0px', margin: '0px' }}>{url}</p>
             </div>
-            <button style={{ ...nextButton, backgroundColor: 'white', color: '#6572fd', marginTop: '120px' }} onClick={() => this.closeModal('setup')}>GOT IT</button>
+            <button className="mdc-button"
+              style={{ ...nextButton, backgroundColor: 'white', color: '#6572fd', marginTop: '120px' }}
+              onClick={() => this.closeModal('setup')}>
+              GOT IT
+            </button>
           </div>
         </ReactModal>
         <ReactModal
@@ -225,14 +230,27 @@ body{ background-color: 'white'}`
   You can check the transaction status here:
             </p>
             <div style={{ ...box, height: '50px', padding: 'none', width: '400px' }}>
-              <p style={{ ...text, color: 'white', lineHeight: '50px', padding: '0px', margin: '0px', display: 'inline-block' }}>
+              <p
+                style={{
+                  ...text,
+                  color: 'white',
+                  lineHeight: '50px',
+                  padding: '0px',
+                  margin: '0px',
+                  display: 'inline-block',
+                }}>
                 https://etherscan.io/tx/{this.state.slicedTxHash}...
               </p>
-              <a href={`https://etherscan.io/tx/${this.state.txHash}`} style={{ lineHeight: '50px', verticalAlign: 'middle' }} target="_blank">
-                <img src={OpenInNew} height='22px' width='22px' style={{ display: 'inline-block', cursor: 'pointer', marginLeft: '30px' }}></img>
+              <a href={`https://etherscan.io/tx/${this.state.txHash}`}
+                style={{ lineHeight: '50px', verticalAlign: 'middle' }} target="_blank">
+                <img src={OpenInNew}
+                  height="22px"
+                  width="22px"
+                  style={{ display: 'inline-block', cursor: 'pointer', marginLeft: '30px' }}></img>
               </a>
             </div>
-            <button style={{ ...nextButton, backgroundColor: 'white', color: '#6572fd', marginTop: '120px' }}
+            <button className="mdc-button"
+              style={{ ...nextButton, backgroundColor: 'white', color: '#6572fd', marginTop: '120px' }}
               onClick={this.closeModal}>
               GOT IT
             </button>
@@ -242,7 +260,7 @@ body{ background-color: 'white'}`
           <TopBanner color="#eb2b4f"
             message="This broadcaster has not yet activated their donation page." />}
         {this.state.verified && <TopBanner color="#6572fd" message={message} />}
-        <AccountSettings />
+        <AccountSettings routerProps={this.props.routerProps} />
         <div style={wrapper}>
           <div>
             <img src={this.state.logo} height="50px" width="50px" style={{ display: 'inline-block' }} />
@@ -261,12 +279,19 @@ body{ background-color: 'white'}`
                 value={this.state.name}
                 onChange={this.handleChange}
                 placeholder="Your nickname"
+                required
               />
             </div>
             <div style={{ marginTop: '60px', textAlign: 'justify' }}>
               <label style={{ ...label, color: this.state.verified ? '#6572fd' : '#f3a4b7' }}> Amount: </label>
               <br />
-              <div style={{ display: 'inline-block', position: 'relative', width: '40%', maxWidth: '480px', marginRight: '32px' }}>
+              <div style={{
+                display: 'inline-block',
+                position: 'relative',
+                width: '40%',
+                maxWidth: '480px',
+                marginRight: '32px',
+              }}>
                 <input
                   type="text"
                   style={{ ...input, width: '100%' }}
@@ -274,6 +299,7 @@ body{ background-color: 'white'}`
                   value={this.state.valueUSD}
                   onChange={this.handleChange}
                   placeholder="0.00"
+                  required
                 />
                 <span style={rightPlaceholder}> USD </span>
               </div>
@@ -304,10 +330,12 @@ body{ background-color: 'white'}`
                 placeholder="Write an optional message"
               />
             </div>
-            <input
+            <button className="mdc-button mdc-button--raised"
+              type="submit"
               style={this.state.verified ? nextButton : disabledNextButton}
-              type="submit" disabled={!this.state.verified} value="DONATE"
-            />
+              disabled={!this.state.verified}>
+              DONATE
+            </button>
           </form>
         </div>
       </div >

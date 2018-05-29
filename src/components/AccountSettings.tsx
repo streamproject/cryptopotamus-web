@@ -1,16 +1,14 @@
 import * as React from 'react'
-import { Redirect } from 'react-router-dom'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
-import { localStorage } from '../utils/ApiUtils'
 import { users } from '../utils/ApiUtils'
 import { settingsMenu } from './styles/common'
-/* tslint:disable*/
+
 export class AccountSettings extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
-    this.state = { error: props.error, loading: true }
+    this.state = { error: props.error, loading: true, routerProps: props.routerProps }
 
     this.onSelect = this.onSelect.bind(this)
   }
@@ -18,20 +16,19 @@ export class AccountSettings extends React.Component<any, any> {
   public async componentWillMount() {
     const css = document.createElement('style')
     document.body.appendChild(css)
-    css.innerHTML = `.Select-placeholder
-{color: #6572fd; font-family: Work Sans; font-size:16px; line-height: 50px; letter-spacing: -0.8px;}`
+    css.innerHTML = ``
     try {
       const user = await users.findUser()
       if (user) {
         const twitchData = await users.me()
         this.setState({
           loading: false,
-          channelId: twitchData.data.id,
+          channelId: twitchData.data._id,
           channelName: twitchData.data.display_name,
           logo: twitchData.data.logo,
-          ethAddress: user.data.eth_address,
           redirectSettings: false,
           redirectLogout: false,
+          redirectDonation: false,
         })
       }
     } catch (err) {
@@ -39,31 +36,42 @@ export class AccountSettings extends React.Component<any, any> {
     }
   }
 
-  private onSelect = async(selectedOption) => {
-    if (selectedOption.value === 'settings') {
-      this.setState({ redirectSettings: true })
-    } else {
-      localStorage.setItem('token', '')
-      console.log(localStorage.getItem('token'))
-      this.setState({ redirectLogout: true })
+  public onSelect = async (selectedOption) => {
+    switch (selectedOption.value) {
+      case 'settings':
+        this.setState({ redirectSettings: true })
+        break
+      case 'logout':
+        window.localStorage.setItem('token', '')
+        this.setState({ redirectLogout: true })
+        break
+      case 'donationPage':
+        this.setState({ redirectDonation: true })
     }
+
   }
 
-  private arrowRenderer() {
+  public arrowRenderer() {
     return (
-      <span style={{paddingTop:'10px', display: 'inline-block', float: 'left'}}>
-        <i className='large material-icons'>arrow_drop_down</i>
+      <span style={{ paddingTop: '10px', display: 'inline-block', float: 'left' }}>
+        <i className="large material-icons">arrow_drop_down</i>
       </span>
     )
   }
+
   public render() {
-    if (this.state.redirectSettings) {
-      return <Redirect to='/settings' />
+    if (this.state.redirectSettings && this.state.routerProps.location.pathname.toString() !== '/settings') {
+      this.state.routerProps.history.push('/settings')
     }
 
     if (this.state.redirectLogout) {
-      return <Redirect to='/' />
+      this.state.routerProps.history.push('/')
     }
+
+    if (this.state.redirectDonation) {
+      this.state.routerProps.history.push(`/donate/${this.state.channelId}`)
+    }
+
     return (
       <div style={{ ...settingsMenu, display: this.state.loading ? 'none' : 'inline-block' }}>
         <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
@@ -79,12 +87,12 @@ export class AccountSettings extends React.Component<any, any> {
               marginTop: '-15px',
               background: 'none',
               color: '#6572fd',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             }}
             autoFocus={false}
             className="settingsSelect"
             autoSize={true}
-            width='auto'
+            width="auto"
             placeholder={this.state.channelName}
             menuContainerStyle={{
               width: '160px',
@@ -101,6 +109,7 @@ export class AccountSettings extends React.Component<any, any> {
             menuStyle={{ width: '160px', margin: 'none', padding: 'none' }}
             searchable={false}
             options={[
+              { value: 'donationPage', label: 'My donation page' },
               { value: 'settings', label: 'Account Settings' },
               { value: 'logout', label: 'Logout' },
             ]}

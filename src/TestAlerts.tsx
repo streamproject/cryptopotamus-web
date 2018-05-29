@@ -1,9 +1,16 @@
+import { MDCRipple } from '@material/ripple'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { buttonStyle, buttonTextStyle, h2, h4, label, nextButton, wrapper } from './components/styles/common'
 import { users } from './utils/ApiUtils'
 
-class TestAlerts extends React.Component<any, any> {
+type TestAlertsProps = { routerProps: any }
+type TestAlertsState = {
+  user: any,
+  loading: boolean,
+}
+
+class TestAlerts extends React.Component<TestAlertsProps, TestAlertsState> {
   constructor(props) {
     super(props)
     this.state = { user: {}, loading: true }
@@ -13,10 +20,15 @@ class TestAlerts extends React.Component<any, any> {
     const user = await users.me()
     this.setState({ user: user.data, loading: false })
   }
-  public async testAlert() {
-    await users.testAlert('TestUser', 'Message bla bla bla', '1')
+
+  public componentDidMount() {
+    MDCRipple.attachTo(document.querySelector('button'))
   }
-  // TO DO FIX BS ASS BUTTON ALIGN
+
+  public async testAlert() {
+    await users.testAlert()
+  }
+
   public render() {
     return (
       <div style={{ ...wrapper, display: this.state.loading ? 'none' : 'block' }}>
@@ -34,13 +46,14 @@ class TestAlerts extends React.Component<any, any> {
             </span>
           </div>
           <div style={{ display: 'inline-block', paddingLeft: '100px', verticalAlign: 'middle' }}>
-            <button style={{
-              ...buttonStyle,
-              background: 'none',
-              border: '1px solid #6572fd',
-              width: '160px',
-              height: '50px',
-            }}>
+            <button className="mdc-button mdc-button--outline"
+              style={{
+                ...buttonStyle,
+                background: 'none',
+                border: '1px solid #6572fd',
+                width: '160px',
+                height: '50px',
+              }}>
               <span
                 style={{ ...buttonTextStyle, color: '#6572fd', lineHeight: '50px' }}
                 onClick={this.testAlert}>
@@ -50,7 +63,7 @@ class TestAlerts extends React.Component<any, any> {
           </div>
           <div style={{ marginTop: '50px' }}>
             <Link to={`/donate/${this.state.user._id}`}>
-              <button style={nextButton}>DONE</button>
+              <button className="mdc-button mdc-button--raised" style={nextButton}>DONE</button>
             </Link>
           </div>
         </div>

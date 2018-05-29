@@ -12,7 +12,7 @@ export const text = {
 } as React.CSSProperties
 
 export const h1 = {
-    fontSize: '80px',
+    fontSize: '5em',
     fontFamily: 'Work Sans',
     fontWeight: 600,
     lineHeight: '1.2',
@@ -21,7 +21,7 @@ export const h1 = {
 } as React.CSSProperties
 
 export const h2 = {
-    fontSize: '48px',
+    fontSize: '3em',
     fontFamily: 'Work Sans',
     fontWeight: 600,
     lineHeight: '2.08',
@@ -30,7 +30,7 @@ export const h2 = {
 } as React.CSSProperties
 
 export const h4 = {
-    fontSize: '24px',
+    fontSize: '1.5em',
     fontFamily: 'Work Sans',
     fontWeight: 500,
     lineHeight: '2.08',
@@ -51,6 +51,7 @@ export const label = {
 export const boxStyle = {
     fontFamily: 'Work Sans',
     fontSize: '16px',
+    background: 'white',
     fontWeight: 'bold',
     lineHeight: '1.56',
     letterSpacing: '1px',
@@ -58,7 +59,6 @@ export const boxStyle = {
     border: '1px solid #6572fd',
     height: '50px',
     width: '160px',
-    background: 'none',
     verticalAlign: 'top',
     cursor: 'pointer',
 } as React.CSSProperties
@@ -75,7 +75,7 @@ export const link = {
 
 export const input = {
     fontFamily: 'Work Sans',
-    fontSize: '24px',
+    fontSize: '1.5em',
     fontWeight: 300,
     letterSpacing: '-.8px',
     color: '#263238',
@@ -91,7 +91,7 @@ export const input = {
 
 export const textArea = {
     fontFamily: 'Work Sans',
-    fontSize: '24px',
+    fontSize: '1.5em',
     fontWeight: 300,
     lineHeight: '2',
     letterSpacing: '-.8px',
@@ -106,12 +106,10 @@ export const textArea = {
 } as React.CSSProperties
 
 export const nextButton = {
-    border: 'none',
     width: '480px',
     marginTop: '66px',
     height: '100px',
     textAlign: 'center',
-    backgroundColor: '#6572fd',
     textDecoration: 'none',
     fontFamily: 'Work Sans',
     fontSize: '16px',
@@ -141,7 +139,7 @@ export const disabledNextButton = {
 
 export const box = {
     border: '1px solid #b0bec5',
-    fontSize: '24px',
+    fontSize: '1.5em',
     fontWeight: 300,
     fontFamily: 'Work Sans',
     paddingLeft: '16px',
@@ -166,7 +164,7 @@ export const buttonStyle = {
 
 export const textStyle = {
     fontFamily: 'Work Sans',
-    fontSize: '66px',
+    fontSize: '4.125em',
     fontWeight: 600,
     lineHeight: '1.25',
     letterSpacing: '-2.5px',
@@ -204,7 +202,7 @@ export const rightPlaceholder = {
     position: 'absolute',
     right: '20px',
     lineHeight: '50px',
-    fontSize: '24px',
+    fontSize: '1.5em',
     fontFamily: 'Work Sans',
     color: '#b0bec5',
     top: '0px',

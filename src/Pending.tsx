@@ -8,7 +8,19 @@ import { users } from './utils/ApiUtils'
 
 let css
 
-class Pending extends React.Component<any, any> {
+type PendingProps = { routerProps: any }
+type PendingState = {
+  txHash: string,
+  slicedTxHash: string,
+  modalIsOpen: boolean,
+  valueETH: string,
+  valueUSD: string,
+  ethAddress: string,
+  message: string,
+  name: string,
+}
+
+class Pending extends React.Component<PendingProps, PendingState> {
   constructor(props) {
     super(props)
     this.state = { ...props.routerProps.location.state, modalIsOpen: false }
@@ -35,10 +47,9 @@ class Pending extends React.Component<any, any> {
               alert('Error occured - try again later' + err2)
             } else {
               try {
-                const res = await users.sendTx(txHash, this.state.message, this.state.name, value, this.state.valueUSD)
-                alert(res)
+                await users.sendTx(txHash, this.state.message, this.state.name, value, this.state.valueUSD)
               } catch (err) {
-                alert(err)
+                //
               }
               this.setState({ slicedTxHash: txHash.slice(0, 7), txHash, modalIsOpen: true })
             }
