@@ -61,7 +61,6 @@ export default class Connect extends React.Component<ConnectProps, ConnectState>
         </div>
         <div style={wrapper}>
           <h2 style={h2}>Connect to StreamLabs Alert Box</h2>
-          <img style={{ marginTop: '50px' }} src="https://media.giphy.com/media/l3q2zVr6cu95nF6O4/giphy.gif" />
           <br />
           <a href={auth.streamlabsConnect}>
             <button className="mdc-button mdc-button--raised" style={nextButton}>CONNECT TO STREAMLABS</button>
