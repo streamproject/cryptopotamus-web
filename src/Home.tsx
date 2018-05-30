@@ -148,7 +148,7 @@ const questionAnswerContent = [
   {
     question: 'But — I want to contact the creators!',
     answer: (
-      <a href="mailto:streamtokenproject@gmail.com" target="_blank">Ok fine then.</a>
+      <a href="mailto:streamtokenproject@gmail.com">Ok fine then.</a>
     ),
   },
 ]
