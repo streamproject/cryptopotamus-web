@@ -1,9 +1,9 @@
-### thing
+### instalation
 
-Install & run:
+To install & run:
 
-1. git clone https://github.com/sddddgjd/thing/
-2. cd thing
+1. git clone https://github.com/streamproject/cryptopotamus-web
+2. cd cryptopotamus-web
 3. git checkout master
 4. yarn install
 5. yarn run start

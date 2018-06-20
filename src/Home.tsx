@@ -8,6 +8,7 @@ import {
   h1,
   h2,
   label,
+  modal,
   nextButton,
   purpleButtonText,
   SmallColumn,
@@ -15,23 +16,6 @@ import {
   whiteButton,
 } from './components/styles/common'
 import { auth, users } from './utils/ApiUtils'
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    height: '500px',
-    width: '640px',
-    border: 'none',
-    backgroundColor: '#6572fd',
-    padding: '0px',
-    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
-  },
-}
 
 const HowStep = (props: {
   number: number,
@@ -116,9 +100,9 @@ const questionAnswerContent = [
         payments, meaning the only costs involved are the <a
           href="https://ethereum.stackexchange.com/questions/3/what-is-meant-by-the-term-gas"
           target="_blank">miniscule gas costs</a> supporters pay as
-        part of accessing the Ethereum blockchain. This avoids
-        the 2-4% transactions fees involved in using centralized
-        services like Paypal and Coinbase.
+      part of accessing the Ethereum blockchain. This avoids
+      the 2-4% transactions fees involved in using centralized
+      services like Paypal and Coinbase.
       </span>
     ),
   },
@@ -140,7 +124,7 @@ const questionAnswerContent = [
       <span>
         Cryptopotamus was created by the team from the <a
           href="https://www.streamtoken.net" target="_blank">Stream</a> project, which
-        shut down in May 2018. However, it’s open source so you can help improve it
+      shut down in May 2018. However, it’s open source so you can help improve it
         on <a href="https://github.com/streamproject" target="_blank">Github</a> if you want to!
       </span>
     ),
@@ -233,10 +217,10 @@ class Home extends React.Component<HomeProps, HomeState> {
               When someone wants to send you Ethereum, they can go to your
               unique donation page to pay you directly using <a
                 href="https://metamask.io/" target="_blank">Metamask</a>, a
-              browser plugin that connects to the Ethereum blockchain. If
-              you set up StreamLabs alerts, you’ll also get real-time
-              in-stream alerts so you can thank your supporters for their
-              contributions.
+            browser plugin that connects to the Ethereum blockchain. If
+            you set up StreamLabs alerts, you’ll also get real-time
+            in-stream alerts so you can thank your supporters for their
+            contributions.
               <br />
               <br />
               Oh, and because this is open-source, Cryptopotamus takes no
@@ -287,7 +271,7 @@ class Home extends React.Component<HomeProps, HomeState> {
             </p>
             <p style={{ textAlign: 'right', position: 'absolute', top: '100px', right: '10%' }}>
               <Link to="/privacy" style={{ color: 'white', textDecoration: 'none' }}> Privacy Policy <br /> </Link>
-              <Link to ="/terms" style={{ color: 'white', textDecoration: 'none' }}> Terms & Conditions </Link>
+              <Link to="/terms" style={{ color: 'white', textDecoration: 'none' }}> Terms & Conditions </Link>
             </p>
             <button
               className="mdc-button mdc-button--raised" onClick={this.openModal}
@@ -305,7 +289,7 @@ class Home extends React.Component<HomeProps, HomeState> {
         <ReactModal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          style={{ content: { ...modal.content, height: '500px', width: '640px' } }}
           appElement={document.getElementById('root')}
           contentLabel="Get Started"
         >

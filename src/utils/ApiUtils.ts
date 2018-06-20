@@ -39,13 +39,13 @@ export const users = {
 
   async findUser() {
     try {
-      const thing = await instance.post(
+      const user = await instance.post(
         'user/findUser',
         null,
         { headers: { authorization: localStorage.getItem('token') } },
       )
 
-      return thing
+      return user
     } catch (err) {
       return
     }

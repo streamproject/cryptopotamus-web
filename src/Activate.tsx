@@ -10,17 +10,8 @@ import 'react-tippy/dist/tippy.css'
 import './assets/index.css'
 import * as twitchPanelBlack from './assets/twitchPanelBlack.png'
 import * as twitchPanelWhite from './assets/twitchPanelWhite.png'
-import { box, h2, h4, label, nextButton, wrapper } from './components/styles/common'
-
-const marginTopSmall = {
-  marginTop: '50px',
-}
-
-const arrow = {
-  marginLeft: '16px',
-  marginRight: '16px',
-  fontSize: '24px',
-}
+import { activateBox, arrow, marginTopSmall } from './components/styles/ActivateStyles'
+import { h2, h4, label, nextButton, wrapper } from './components/styles/common'
 
 type ActivateProps = { routerProps: any }
 type ActivateState = {
@@ -31,10 +22,11 @@ type ActivateState = {
 class Activate extends React.Component<ActivateProps, ActivateState> {
   constructor(props) {
     super(props)
-    if (props.routerProps.location) {
-    const setupState = props.routerProps.location.state
 
-    this.state = {
+    if (props.routerProps.location) {
+      const setupState = props.routerProps.location.state
+
+      this.state = {
         user: setupState.user,
         redirect: false,
       }
@@ -74,7 +66,7 @@ class Activate extends React.Component<ActivateProps, ActivateState> {
         </div>
         <div>
           <label style={label}>Step 1 - Go to your Twitch channel (open a new tab)</label>
-          <div style={{ ...box, width: '480px', marginTop: '30px' }}>
+          <div style={ activateBox }>
             <span> {twitchLink} </span>
             <a style={{ float: 'right' }} href={twitchLink} target="_blank">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -120,7 +112,7 @@ class Activate extends React.Component<ActivateProps, ActivateState> {
           <label style={label}>
             Step 4 - Paste this link (this is your unique donation page URL) into the “Image Links to…” section
           </label>
-          <div style={{ ...box, width: '480px', marginTop: '30px' }}>
+          <div style={ activateBox} >
             <span> {donateLink} </span>
             <span style={{ clear: 'both', float: 'right', cursor: 'pointer' }}>
               <CopyToClipboard text={donateLink}>

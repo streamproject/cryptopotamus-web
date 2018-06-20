@@ -6,7 +6,7 @@ import * as OpenInNew from './assets/openInNew.png'
 import { AccountSettings } from './components/AccountSettings'
 import {
   box,
-  disabledNextButton, h2, h4, input, label, nextButton, rightPlaceholder, text, textArea, wrapper,
+  disabledNextButton, h2, h4, input, label, modal, nextButton, rightPlaceholder, text, textArea, wrapper,
 } from './components/styles/common'
 import { TopBanner } from './components/TopBanner'
 import { users } from './utils/ApiUtils'
@@ -30,23 +30,6 @@ type DonateState = {
   modalConfirmedIsOpen: boolean,
   txHash: string,
   slicedTxHash: string,
-}
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    height: '750px',
-    width: '640px',
-    border: 'none',
-    backgroundColor: '#6572fd',
-    padding: '0px',
-    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
-  },
 }
 
 class Donate extends React.Component<DonateProps, DonateState> {
@@ -125,8 +108,10 @@ class Donate extends React.Component<DonateProps, DonateState> {
   public async componentWillMount() {
     try {
       const user = await users.findUserById(this.state.channelId)
+
       if (user) {
         const twitchData = await users.meById(this.state.channelId)
+
         this.setState({
           verified: true,
           loading: false,
@@ -140,6 +125,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
     } catch (err) {
       //
     }
+
     axios.get('https://api.infura.io/v1/ticker/ethusd').then((res) => {
       this.setState({ course: res.data.bid })
     })
@@ -153,27 +139,36 @@ class Donate extends React.Component<DonateProps, DonateState> {
 
   public handleChange(event) {
     const name = event.target.name
-    if (name !== 'valueUSD' && name !== 'valueETH' && name !== 'name') {
-      this.setState({ [name]: event.target.value })
-    } else {
-      if (name === 'valueUSD') {
-        const val = Number(event.target.value)
-        const eth = val / this.state.course
 
-        if (!isNaN(val) && this.decimalPlaces(event.target.value) <= 2) {
+    switch (name) {
+
+      case 'valueUSD':
+        const valUSD = Number(event.target.value)
+        const eth = valUSD / this.state.course
+
+        if (!isNaN(valUSD) && this.decimalPlaces(event.target.value) <= 2) {
           this.setState({ [name]: event.target.value, valueETH: eth.toString() })
         }
-      } else if (name === 'valueETH') {
-        const val = Number(event.target.value)
-        const usd = val * this.state.course
+
+        break
+
+      case 'valueETH':
+        const valETH = Number(event.target.value)
+        const usd = valETH * this.state.course
 
         this.setState({ [name]: event.target.value, valueUSD: usd.toString() })
-      } else if (name === 'name') {
+
+        break
+
+      case 'name':
         const value = event.target.value
         if (value.length <= 25 && !this.checkInvalidCharacters(value)) {
           this.setState({ [name]: event.target.value })
         }
-      }
+
+      default:
+        this.setState({ [name]: event.target.value })
+        break
     }
   }
 
@@ -197,7 +192,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
         <ReactModal
           isOpen={this.state.modalSetupIsOpen}
           onRequestClose={() => this.closeModal('setup')}
-          style={customStyles}
+          style={modal}
           contentLabel="Example Modal">
 
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
@@ -219,7 +214,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
         <ReactModal
           isOpen={this.state.modalConfirmedIsOpen}
           onRequestClose={() => this.closeModal('confirmed')}
-          style={customStyles}
+          style={modal}
           contentLabel="Payment completed">
 
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>

@@ -1,28 +1,10 @@
+import { MDCRipple } from '@material/ripple'
 import { AccountSettings } from 'components/AccountSettings'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import { Redirect } from 'react-router'
 import { Back } from './components/Back'
-import { h2, h4, nextButton, text, wrapper } from './components/styles/common'
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    height: '750px',
-    width: '640px',
-    border: 'none',
-    backgroundColor: '#ff1744',
-    padding: '0px',
-    boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
-  },
-}
-
-import { MDCRipple } from '@material/ripple'
+import { h2, h4, modal, nextButton, text, wrapper } from './components/styles/common'
 
 type ConfirmProps = { routerProps: any }
 type ConfirmState = {
@@ -84,12 +66,13 @@ class Confirm extends React.Component<ConfirmProps, ConfirmState> {
         state: this.state,
       }} />
     }
+
     return (
       <div style={wrapper}>
         <ReactModal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          style={{ content: { ...modal.content, backgroundColor: '#ff1744' } }}
           contentLabel="Example Modal">
 
           <div style={{ textAlign: 'center', marginLeft: '80px', marginRight: '80px', marginTop: '80px' }}>
