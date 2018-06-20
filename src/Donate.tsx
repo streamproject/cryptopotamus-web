@@ -2,7 +2,8 @@ import { MDCRipple } from '@material/ripple'
 import axios from 'axios'
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
-import * as OpenInNew from './assets/openInNew.png'
+import * as arrows from './assets/img/arrows.jpg'
+import * as openInNew from './assets/img/openInNew.png'
 import { AccountSettings } from './components/AccountSettings'
 import {
   box,
@@ -238,7 +239,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
               </p>
               <a href={`https://etherscan.io/tx/${this.state.txHash}`}
                 style={{ lineHeight: '50px', verticalAlign: 'middle' }} target="_blank">
-                <img src={OpenInNew}
+                <img src={openInNew}
                   height="22px"
                   width="22px"
                   style={{ display: 'inline-block', cursor: 'pointer', marginLeft: '30px' }}></img>
@@ -299,7 +300,7 @@ class Donate extends React.Component<DonateProps, DonateState> {
                 <span style={rightPlaceholder}> USD </span>
               </div>
               <div style={{ display: 'inline-block', textAlign: 'center', width: '50px', position: 'relative' }}>
-                <img src="https://i.snag.gy/LE3ATD.jpg" />
+                <img src={arrows} />
               </div>
               <div style={{ display: 'inline-block', position: 'relative', width: '40%', maxWidth: '480px' }}>
                 <input
