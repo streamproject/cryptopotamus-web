@@ -1,4 +1,4 @@
-### instalation
+### Installation
 
 To install & run:
 
