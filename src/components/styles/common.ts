@@ -209,12 +209,29 @@ export const rightPlaceholder = {
 } as React.CSSProperties
 
 export const BigColumn = {
-  width: '80%',
-  textAlign: 'left',
-  marginLeft: 'auto',
-  marginRight: 'auto',
+    width: '80%',
+    textAlign: 'left',
+    marginLeft: 'auto',
+    marginRight: 'auto',
 } as React.CSSProperties
 
 export const SmallColumn = {
-  padding: '0 20%',
+    padding: '0 20%',
 } as React.CSSProperties
+
+export const modal = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        height: '750px',
+        width: '640px',
+        border: 'none',
+        backgroundColor: '#6572fd',
+        padding: '0px',
+        boxShadow: '32px 32px 16px 0 rgba(0, 0, 0, 0.1)',
+    },
+}

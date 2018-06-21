@@ -6,8 +6,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Redirect } from 'react-router'
 import 'react-select/dist/react-select.css'
 import * as Web3 from 'web3'
-import * as twitchPanelBlack from './assets/twitchPanelBlack.png'
-import * as twitchPanelWhite from './assets/twitchPanelWhite.png'
+import * as twitchPanelBlack from './assets/img/twitchPanelBlack.png'
+import * as twitchPanelWhite from './assets/img/twitchPanelWhite.png'
 import { TextError } from './components/Errors'
 import { box, boxStyle, h2, h4, input, label, text, wrapper } from './components/styles/common'
 import { auth, users } from './utils/ApiUtils'
@@ -145,8 +145,8 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
             </label>
               <div style={{ ...box, width: '480px', marginTop: '30px', position: 'relative' }}>
                 <span> {`https://cryptopotam.us/donate/${this.state.user._id}`} </span>
-                <div style={{ float: 'right', position: 'absolute', top: '5px', right: '15px' }}>
-                  <CopyToClipboard text={`https://cryptopotam.us/${this.state.user._id}`}>
+                <div style={{ float: 'right', position: 'absolute', top: '5px', right: '15px', cursor: 'pointer' }}>
+                  <CopyToClipboard text={`https://cryptopotam.us/donate/${this.state.user._id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 19 22">
                       <g fill="none" fillRule="evenodd">
                         <path d="M-2-1h24v24H-2z" />

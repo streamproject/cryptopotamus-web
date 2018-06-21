@@ -41,11 +41,6 @@ class Setup extends React.Component<SetupProps, SetupState> {
   }
 
   public async componentWillMount() {
-    const css = document.createElement('style')
-    document.body.appendChild(css)
-    css.innerHTML = `::-webkit-input-placeholder
-{color: #b0bec5; font-family: Work Sans; font-size:24px; line-height: 50px; height: 50px; letter-spacing: -0.8px;}`
-
     const user = await users.me()
     const dbUser = await users.findUser()
 

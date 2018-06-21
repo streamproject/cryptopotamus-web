@@ -14,13 +14,13 @@ export class AccountSettings extends React.Component<any, any> {
   }
 
   public async componentWillMount() {
-    const css = document.createElement('style')
-    document.body.appendChild(css)
-    css.innerHTML = ``
+
     try {
       const user = await users.findUser()
+
       if (user) {
         const twitchData = await users.me()
+
         this.setState({
           loading: false,
           channelId: twitchData.data._id,
